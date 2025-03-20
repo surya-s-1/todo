@@ -1,3 +1,4 @@
+import { useAuth } from "@/components/AuthWrapper";
 import { Geist, Geist_Mono } from "next/font/google";
 
 const geistSans = Geist({
@@ -11,9 +12,11 @@ const geistMono = Geist_Mono({
 });
 
 export default function Home() {
+  const { user } = useAuth()
+
   return (
     <div>
-      Hello
+      Hello {user ? user.username : "Guest"}!
     </div>
-  );
+  )
 }
