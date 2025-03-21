@@ -61,7 +61,7 @@ const RegisterPage = () => {
                         className='m-0 p-2 border border-gray-300 rounded'
                     />
                     <button type='submit' className='m-0 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer'>
-                        Register Now
+                        Register
                     </button>
                     <span className='text-sm'>
                         Already have an account? <a href='/login' className='text-blue-500'>Login</a>
