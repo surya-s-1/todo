@@ -1,4 +1,4 @@
-import ProfileIcon from "@/components/tasks/ProfileIcon";
+import Header from "@/components/tasks/Header";
 import { useAuth } from "@/components/wrappers/AuthWrapper";
 import { useNotifications } from "@/components/wrappers/NotificationWrapper";
 import { useEffect, useState } from "react";
@@ -20,7 +20,7 @@ export default function Home() {
       const result = await response.json()
 
       if (result?.length === 0) {
-        setNotification('info', "Looks like there are'nt any tasks in your list yet. Start now :-)", 5)
+        setNotification('info', "Looks like there are'nt any tasks in your list yet. Start now :-)", 3)
       }
       
       setTasks(result)
@@ -37,8 +37,7 @@ export default function Home() {
 
   return (
     <div>
-      <ProfileIcon username={user.username} />
-      Hello {user ? user.username : "Guest"}!
+      <Header username={user.username} />
     </div>
   )
 }
