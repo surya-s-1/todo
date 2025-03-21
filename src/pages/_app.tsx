@@ -1,4 +1,5 @@
 import AuthWrapper from "@/components/AuthWrapper";
+import NotificationWrapper from "@/components/NotificationWrapper";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
@@ -15,7 +16,9 @@ export default function App({ Component, pageProps, router }: AppProps) {
 			</Head>
 			{isProtectedRoute ? (
 				<AuthWrapper>
-					<Component {...pageProps} />
+					<NotificationWrapper>
+						<Component {...pageProps} />
+					</NotificationWrapper>
 				</AuthWrapper>
 			) : (
 				<Component {...pageProps} />

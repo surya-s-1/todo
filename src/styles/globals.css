@@ -21,3 +21,18 @@ body {
 h1, h2, h3, h4, h5, h6, p {
   font-size: revert;
 }
+
+@keyframes notification-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-notification {
+  animation: notification-fade-in 0.3s ease-out;
+}
