@@ -1,5 +1,5 @@
-import { useAuth } from "@/components/AuthWrapper";
-import { useNotifications } from "@/components/NotificationWrapper";
+import { useAuth } from "@/components/wrappers/AuthWrapper";
+import { useNotifications } from "@/components/wrappers/NotificationWrapper";
 import { useEffect, useState } from "react";
 
 export default function Home() {
