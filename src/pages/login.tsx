@@ -1,24 +1,53 @@
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
 
 const LoginPage = () => {
-    React.useEffect(() => {
+    useEffect(() => {
         document.title = 'Login | To-Do App'
     }, [])
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
+    const router = useRouter()
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        console.log('Username:', username)
-        console.log('Password:', password)
+    const handleSubmit = async (e: React.FormEvent) => {
+        try {
+            e.preventDefault()
+
+            const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_ENDPOINT}/login` || '', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+
+            if (!response.ok) {
+                console.error('Failed to login', response)
+                const result = await response.json()
+                setMessage(result?.message || 'Failed to login')
+                return
+            }
+            
+            const result = await response.json()
+
+            localStorage.setItem('access_token', result.access_token)
+            localStorage.setItem('refresh_token', result.refresh_token)
+            router.push('/tasks')
+
+        } catch (error) {
+            console.error('Failed to login', error)
+            setMessage('Failed to login')
+        }
     }
 
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
             <div>
-                <h2 className='text-2xl mb-4'>Login</h2>
-                <form onSubmit={handleSubmit} className='flex flex-col items-start gap-4'>
+                <h2 className='text-2xl mb-2'>Login</h2>
+                <span className='text-red-500'>{message}</span>
+                <form onSubmit={handleSubmit} className='flex flex-col items-start gap-4 mt-2'>
                     <input
                         type='input'
                         value={username}

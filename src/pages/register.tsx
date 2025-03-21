@@ -1,24 +1,49 @@
-import React, { useState } from 'react'
+import { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react'
 
-const LoginPage = () => {
-    React.useEffect(() => {
+const RegisterPage = () => {
+    useEffect(() => {
         document.title = 'Register | To-Do App'
     }, [])
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const [message, setMessage] = useState('')
+    const router = useRouter()
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault()
-        console.log('Username:', username)
-        console.log('Password:', password)
+    const handleSubmit = async (e: React.FormEvent) => {
+        try {
+            e.preventDefault()
+
+            const response = await fetch(`${process.env.NEXT_PUBLIC_AUTH_ENDPOINT}/register` || '', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ username, password })
+            })
+
+            if (!response.ok) {
+                console.error('Failed to register', response)
+                const result = await response.json()
+                setMessage(result?.message || 'Failed to register')
+                return
+            }
+
+            router.push('/login')
+
+        } catch (error) {
+            console.error('Failed to register', error)
+            setMessage('Failed to register')
+        }
     }
 
     return (
         <div className='flex flex-col items-center justify-center h-screen'>
             <div>
-                <h2 className='text-2xl mb-4'>Register</h2>
-                <form onSubmit={handleSubmit} className='flex flex-col items-start gap-4'>
+                <h2 className='text-2xl mb-2'>Register</h2>
+                <span className='text-red-500'>{message}</span>
+                <form onSubmit={handleSubmit} className='flex flex-col items-start gap-4 mt-2'>
                     <input
                         type='input'
                         value={username}
@@ -47,4 +72,4 @@ const LoginPage = () => {
     )
 }
 
-export default LoginPage
+export default RegisterPage
