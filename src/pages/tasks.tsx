@@ -1,3 +1,4 @@
+import ProfileIcon from "@/components/tasks/ProfileIcon";
 import { useAuth } from "@/components/wrappers/AuthWrapper";
 import { useNotifications } from "@/components/wrappers/NotificationWrapper";
 import { useEffect, useState } from "react";
@@ -36,6 +37,7 @@ export default function Home() {
 
   return (
     <div>
+      <ProfileIcon username={user.username} />
       Hello {user ? user.username : "Guest"}!
     </div>
   )
