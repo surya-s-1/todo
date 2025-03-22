@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState } from 'react'
 
 interface ModalArguments {
     isOpen: boolean;
@@ -25,11 +25,11 @@ export default function Modal({ isOpen, onClose, children }: ModalArguments) {
     return (
         <div
             onClick={() => onClose()}
-            className={`fixed inset-0 w-full h-full bg-black/50 flex items-center justify-center transition-opacity duration-200 ${visible ? "opacity-100" : "opacity-0"}`}
+            className={`fixed inset-0 w-full h-full bg-black/50 flex items-center justify-center transition-opacity duration-200 ${visible ? 'opacity-100' : 'opacity-0'}`}
         >
             <div
                 onClick={e => e.stopPropagation()}
-                className={`bg-white h-[150px] w-[240px] mx-auto p-2 border-2 border-black rounded-[10px] shadow-md transform transition-transform duration-200 ${visible ? "scale-100" : "scale-95"}`}
+                className={`bg-white h-fit w-fit p-2 rounded-xl shadow-md transform transition-transform duration-200 ${visible ? 'scale-100' : 'scale-95'}`}
             >
                 {children}
             </div>
