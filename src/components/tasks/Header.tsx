@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import Modal from "./Modal";
+import NewTask from "./NewTask";
 
 export default function Header({ username }: { username: string }) {
     const [profileOpen, setProfileOpen] = useState(false)
@@ -47,9 +48,7 @@ export default function Header({ username }: { username: string }) {
                     </div>
                 </div>
                 <Modal isOpen={modalOpen} onClose={()=>setModalOpen(false)}>
-                    <div>
-                        Hello
-                    </div>
+                    <NewTask />
                 </Modal>
             </div>
 

@@ -18,16 +18,12 @@ export default function Home() {
     
     if (response.ok) {
       const result = await response.json()
-
       if (result?.length === 0) {
         setNotification('info', "Looks like there are'nt any tasks in your list yet. Start now :-)", 3)
       }
-      
       setTasks(result)
-
     } else {
       setNotification('error', 'Unable to fetch your tasks', 3)
-
     }
   }
 
@@ -38,6 +34,11 @@ export default function Home() {
   return (
     <div>
       <Header username={user.username} />
+      {tasks.map(task => {
+        return(
+          <span>{task?.title}</span>
+        )
+      })}
     </div>
   )
 }
