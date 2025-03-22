@@ -1,9 +1,11 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
+import Modal from "./Modal";
 
 export default function Header({ username }: { username: string }) {
-    const [open, setOpen] = useState(false)
+    const [profileOpen, setProfileOpen] = useState(false)
+    const [modalOpen, setModalOpen] = useState(false)
     const router = useRouter()
 
     const handleLogout = () => {
@@ -19,22 +21,23 @@ export default function Header({ username }: { username: string }) {
                 <div className="flex flex-row items-start gap-4 px-4">
                     <button
                         className="my-0 mx-2 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer"
+                        onClick={() => setModalOpen(true)}
                     >
                         New Task
                     </button>
 
                     <div className="relative">
                         <CgProfile
-                            onClick={() => setOpen(!open)}
+                            onClick={() => setProfileOpen(!profileOpen)}
                             size={36}
                             className="cursor-pointer"
                         />
 
-                        {open && (
+                        {profileOpen && (
                             <div className="absolute right-0 mt-4 w-fit bg-gray-100 rounded-2xl shadow-md">
                                 <span className="block px-6 py-3">{username}</span>
                                 <button 
-                                    className="px-6 py-3 text-red-500 cursor-pointer hover:shadow-sm"
+                                    className="px-6 py-3 text-red-500 cursor-pointer"
                                     onClick={() => handleLogout()}
                                 >
                                     Logout
@@ -43,6 +46,11 @@ export default function Header({ username }: { username: string }) {
                         )}
                     </div>
                 </div>
+                <Modal isOpen={modalOpen} onClose={()=>setModalOpen(false)}>
+                    <div>
+                        Hello
+                    </div>
+                </Modal>
             </div>
 
         </>
