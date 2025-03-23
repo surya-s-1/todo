@@ -1,10 +1,11 @@
 import ClosedTask from "@/components/tasks/ClosedTask";
 import Header from "@/components/tasks/Header";
 import Modal from "@/components/tasks/Modal";
-import NewTask from "@/components/tasks/NewTask";
 import OpenTask from "@/components/tasks/OpenTask";
+import { COLORS } from "@/components/utility";
 import { useAuth } from "@/components/wrappers/AuthWrapper";
 import { useNotifications } from "@/components/wrappers/NotificationWrapper";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa"
 
@@ -15,10 +16,12 @@ interface TaskValues {
   deadline: Date | null
   completed: boolean
   color_code: string | null
+  created_at: Date
 }
 
 export default function Home() {
   const { user } = useAuth()
+  const router = useRouter()
   const [tasks, setTasks] = useState<Array<TaskValues>>([])
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<TaskValues | null>(null)
@@ -34,13 +37,13 @@ export default function Home() {
     })
     
     if (response.ok) {
-      const result = await response.json()
+      const result: Array<TaskValues> = await response.json()
 
       if (result?.length === 0) {
         setNotification('info', "Looks like there are'nt any tasks in your list yet. Start now :-)", 3)
       }
 
-      console.log(result)
+      console.log(result.sort((a, b) => (new Date(a.created_at).getTime() - new Date(b.created_at).getTime())))
 
       setTasks(result)
     } else {
@@ -112,21 +115,50 @@ export default function Home() {
     }
   }
 
-  function handleSelectTask(id: string) {
-    setSelected(tasks.find(el => el.id === id) || null)
-    setModalOpen(true)
+  async function createTask(title: string, description: string, deadline: Date | null, completed: boolean, color_code: string) {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/create`, {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`
+          },
+          body: JSON.stringify({ title, description, deadline, completed, color_code })
+      })
+
+      if (response.ok) {
+          setNotification('success', "Created the task successfully", 3)
+          handleModalClose()
+          fetchTasks()
+      } else {
+          const result = await response.json()
+
+          if (result?.statusCode === 400) {
+              setNotification('error', result?.message?.[0], 3)
+          } else {
+              setNotification('error', 'Unable to create the task', 3)
+          }
+      }
   }
 
   function handleModalClose() {
     setNewTask(false)
     setSelected(null)
     setModalOpen(false)
+    router.push('/tasks', undefined, { shallow: true })
   }
 
   useEffect(()=>{
     document.title = 'Your Tasklist | To-Do App'
     fetchTasks()    
   }, [])
+
+  useEffect(()=>{
+    if (tasks.length > 0 && router.asPath.includes('#')) {
+      const hashId = router.asPath.split("#")[1]
+      setSelected(tasks.find(el => el.id === hashId) || null)
+      setModalOpen(true)
+    }
+  }, [tasks, router.asPath])
 
   return (
     <div>
@@ -141,7 +173,6 @@ export default function Home() {
             _completed={task.completed}
             _color_code={task.color_code || '#FFFFFF'}
             _deadline={task.deadline}
-            onSelect={handleSelectTask}
             updateComplete={markCompleteTask}
             onDelete={deleteTask}
           />
@@ -175,7 +206,15 @@ export default function Home() {
       </Modal>}
       {newTask &&
       <Modal isOpen={modalOpen} onClose={()=>handleModalClose()}>
-          <NewTask />
+          <OpenTask
+            _title={''}
+            _description={''}
+            _deadline={null}
+            _color_code={COLORS[Math.floor(Math.random() * COLORS.length)]}
+            _completed={false}
+            _button_name='Create'
+            onSubmit={createTask}
+        />
       </Modal>}
     </div>
   )

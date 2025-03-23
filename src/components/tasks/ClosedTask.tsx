@@ -2,6 +2,7 @@ import Switch from 'react-switch'
 import { FaRegCalendarAlt } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
 import 'react-calendar/dist/Calendar.css'
+import { useRouter } from 'next/router'
 
 interface ClosedTask {
     _id: string
@@ -12,16 +13,16 @@ interface ClosedTask {
     _color_code: string
     updateComplete: (id: string, complete: boolean) => void
     onDelete: (id: string) => void
-    onSelect: (id: string) => void
 }
 
-export default function ClosedTask({ _id, _title, _description, _deadline, _completed, _color_code, onSelect, updateComplete, onDelete }: ClosedTask) {
+export default function ClosedTask({ _id, _title, _description, _deadline, _completed, _color_code, updateComplete, onDelete }: ClosedTask) {
+    const router = useRouter()
     const passedDeadline = _deadline ? new Date(_deadline).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) : false
 
     return (
         <div 
             className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: _color_code }}
-            onClick={() => onSelect(_id)}
+            onClick={() => router.push(`/tasks/#${_id}`)}
         >
             <div className='flex items-center justify-between gap-2'>
                 <span className='text-md p-1 w-full text-ellipsis overflow-hidden whitespace-nowrap'>
