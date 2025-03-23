@@ -29,7 +29,6 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
     const passedDeadline = deadline ? new Date(deadline).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) : false
 
     const handleDateChange = (date: Date | null) => {
-        console.log('DATE:', date)
         setDeadline(date)
         setShowCalendar(false)
     }
