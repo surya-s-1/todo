@@ -33,7 +33,7 @@ export default function Home() {
       if (task) {
         setSelected(task)
         setModalOpen(true)
-        document.title = `To-Do: ${task.title}`
+        document.title = `${task.title} | To-Do List`
       }
     }
   }, [tasks, router.asPath])
