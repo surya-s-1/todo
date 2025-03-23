@@ -13,10 +13,10 @@ export default function Modal({ isOpen, onClose, children }: ModalArguments) {
     useEffect(() => {
         if (isOpen) {
             setShow(true);
-            setTimeout(() => setVisible(true), 100) // Small delay to allow transition
+            setTimeout(() => setVisible(true), 100)
         } else {
             setVisible(false);
-            setTimeout(() => setShow(false), 200) // Wait for transition before unmounting
+            setTimeout(() => setShow(false), 200)
         }
     }, [isOpen])
 
@@ -24,7 +24,10 @@ export default function Modal({ isOpen, onClose, children }: ModalArguments) {
 
     return (
         <div
-            onClick={() => onClose()}
+            onClick={() => {
+                setVisible(false);
+                setTimeout(() => onClose(), 200)
+            }}
             className={`fixed inset-0 w-full h-full bg-black/50 flex items-center justify-center transition-opacity duration-200 ${visible ? 'opacity-100' : 'opacity-0'}`}
         >
             <div
