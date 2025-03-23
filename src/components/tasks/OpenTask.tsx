@@ -2,7 +2,7 @@ import { useState } from 'react'
 import Switch from 'react-switch'
 import { FaRegCalendarAlt } from "react-icons/fa"
 import { IoMdCloseCircle } from "react-icons/io"
-import { MdDone , MdDelete } from "react-icons/md"
+import { MdDone, MdDelete } from "react-icons/md"
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 
@@ -25,6 +25,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
     const [completed, setCompleted] = useState<boolean>(_completed)
     const [color_code, setColorCode] = useState<string>(_color_code)
     const [showCalendar, setShowCalendar] = useState<boolean>(false)
+    const [showColorPicker, setShowColorPicker] = useState<boolean>(false)
 
     const passedDeadline = deadline ? new Date(deadline).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) : false
 
@@ -33,8 +34,13 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
         setShowCalendar(false)
     }
 
+    const colors = [
+        "#F7BFA8", "#E8E274", "#97E874", "#74E8E8",
+        "#96B8EB", "#B498F5", "#F7A8E0", "#FFFFFF"
+    ]
+
     return (
-        <div className='flex flex-col'>
+        <div className={`flex flex-col rounded-xl p-2`} style={{ backgroundColor: color_code }}>
             <div className='flex flex-row items-center justify-between gap-2'>
                 <input
                     className='text-2xl p-2 w-2xl border-0 outline-0'
@@ -43,7 +49,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                     onChange={e => setTitle(e.target.value)}
                 />
                 <div className='flex flex-row-reverse items-center gap-2 mx-1'>
-                    <span className='text-sm text-gray-400'>
+                    <span className='text-sm font-semibold text-gray-500'>
                         Mark Complete
                     </span>
                     <Switch
@@ -100,17 +106,37 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                     {_button_name}
                 </button>
                 {_id &&
-                <button
-                    onClick={() => onDelete(_id)}
-                    className={`custom-button custom-button-alert`}
-                >
-                    <div
-                        className='flex flex-row items-center gap-1 text-sm'
-                    >
-                        <MdDelete size={16} />
-                        <span>Delete</span>
-                    </div>
-                </button>}
+                    <div className='flex flex-row items-center gap-5'>
+                        <div className="relative">
+                            <button
+                                onClick={() => setShowColorPicker(!showColorPicker)}
+                                className="w-6 h-6 rounded-full border border-black shadow-2xl cursor-pointer"
+                                style={{ backgroundColor: color_code }}
+                            >
+                            </button>
+                            {showColorPicker && (
+                            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 p-2 bg-white shadow-lg rounded-lg">
+                                {colors.map((color) => (
+                                    <button
+                                        key={color}
+                                        className="w-6 h-6 rounded-full border-1 border-gray-300 cursor-pointer"
+                                        style={{ backgroundColor: color }}
+                                        onClick={() => {
+                                            setColorCode(color)
+                                            setShowColorPicker(false)
+                                        }}
+                                    ></button>
+                                ))}
+                            </div>)}
+                        </div>
+                        <button
+                            onClick={() => onDelete(_id)}
+                            className={`flex flex-row items-center gap-1 text-sm custom-button custom-button-alert`}
+                        >
+                            <MdDelete size={16} />
+                            <span>Delete</span>
+                        </button>
+                    </div>}
             </div>
         </div>
     )
