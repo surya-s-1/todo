@@ -71,7 +71,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                         className='flex flex-row items-center gap-2 text-sm'
                     >
                         <FaRegCalendarAlt size={16} />
-                        {deadline ? new Date(deadline).toDateString() : 'Deadline'}
+                        {deadline ? new Date(deadline).toDateString() : 'No Deadline'}
                     </div>
                     {deadline && (
                         <span
