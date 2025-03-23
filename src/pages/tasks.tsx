@@ -1,4 +1,3 @@
-// pages/tasks.tsx
 import ClosedTask from "@/components/tasks/ClosedTask"
 import Header from "@/components/tasks/Header"
 import Modal from "@/components/tasks/Modal"
@@ -13,7 +12,7 @@ import { COLORS } from "@/components/utility"
 export default function Home() {
   const { user } = useAuth()
   const router = useRouter()
-  const { tasks, fetchTasks, deleteTask, markCompleteTask, updateTask, createTask } = useTasks()
+  const { tasks, deleteTask, markCompleteTask, updateTask, createTask } = useTasks()
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<TaskValues | null>(null)
   const [newTask, setNewTask] = useState(false)
