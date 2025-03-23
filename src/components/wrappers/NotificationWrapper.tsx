@@ -28,7 +28,7 @@ export default function NotificationWrapper({ children }: WrappedComponent) {
     const setNotification = (type: NotificationType, message: string, timeout: number = 3) => {
         const id = Date.now()
 
-        setNotifications((prev) => (prev.some(el => el.message === message) ? prev : [...prev, { id, type, message }]))
+        setNotifications((prev) => [...prev, { id, type, message }])
 
         setTimeout(()=>{
             setNotifications((prev) => (prev.filter(obj => obj.id !== id)))
