@@ -28,7 +28,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
     const [showCalendar, setShowCalendar] = useState<boolean>(false)
     const [showColorPicker, setShowColorPicker] = useState<boolean>(false)
 
-    const passedDeadline = deadline ? new Date(deadline).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) : false
+    const deadlineOver = deadline ? new Date(deadline) < new Date() : false
 
     const handleDateChange = (date: Date | null) => {
         setDeadline(date)
@@ -65,7 +65,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
             <div className='flex flex-row items-center justify-between gap-2 px-4'>
                 <button
                     onClick={() => setShowCalendar(!showCalendar)}
-                    className={`custom-button ${deadline && passedDeadline && 'custom-button-alert'}`}
+                    className={`custom-button ${deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''}`}
                 >
                     <div
                         className='flex flex-row items-center gap-2 text-sm'
