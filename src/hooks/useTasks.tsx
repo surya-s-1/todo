@@ -67,7 +67,7 @@ export default function useTasks() {
       }),
     })
     if (response.ok) {
-      setNotification("success", "Marked the task completed", 3)
+      setNotification("success", complete ? "Marked the task completed" : "Marked the task incomplete", 3)
       fetchTasks()
 
       return true
