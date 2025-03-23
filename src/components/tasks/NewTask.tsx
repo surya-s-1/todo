@@ -19,7 +19,13 @@ export default function NewTask() {
             setNotification('success', "Created the task successfully", 3)
             console.log(result)
         } else {
-            setNotification('error', 'Unable to create the task', 3)
+            const result = await response.json()
+
+            if (result?.statusCode === 400) {
+                setNotification('error', result?.message?.[0], 3)
+            } else {
+                setNotification('error', 'Unable to create the task', 3)
+            }
         }
     }
 
