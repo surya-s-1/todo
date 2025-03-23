@@ -1,4 +1,5 @@
 import { createContext, useContext, ReactNode, useState } from "react"
+import { CiCircleInfo } from "react-icons/ci"
 
 interface WrappedComponent {
     children: ReactNode
@@ -46,10 +47,11 @@ export default function NotificationWrapper({ children }: WrappedComponent) {
                                 `${el.type === 'error' ? 'bg-red-200 text-red-500' :
                                 el.type === 'warning' ? 'bg-amber-200 text-amber-500' :
                                 el.type === 'success' ? 'bg-green-200 text-green-500' :
-                                'bg-blue-200 text-blue-500'} m-2 p-4 rounded shadow-md w-fit animate-notification`
+                                'bg-blue-200 text-blue-500'} m-2 p-4 rounded shadow-md w-fit animate-notification flex flex-row items-center gap-2`
                             }
                         >
-                            {el.message}
+                            <CiCircleInfo size={24} />
+                            <span>{el.message}</span>
                         </div>
                     )
                 })}

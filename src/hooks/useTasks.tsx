@@ -67,7 +67,7 @@ export default function useTasks() {
       }),
     })
     if (response.ok) {
-      setNotification("success", "Updated the task", 3)
+      setNotification("success", "Marked the task completed", 3)
       fetchTasks()
 
       return true
@@ -94,8 +94,8 @@ export default function useTasks() {
       },
       body: JSON.stringify({
         task_id: id,
-        title,
-        description,
+        title: title.trim(),
+        description: description.trim(),
         deadline,
         completed,
         color_code,
@@ -107,7 +107,13 @@ export default function useTasks() {
 
       return true
     } else {
-      setNotification("error", "Unable to update the task", 3)
+      const result = await response.json()
+
+      if (result?.message) {
+        setNotification("error", result?.message, 3)
+      } else {
+        setNotification("error", "Unable to update the task", 3)
+      }
       
       return false
     }
@@ -126,7 +132,7 @@ export default function useTasks() {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
-      body: JSON.stringify({ title, description, deadline, completed, color_code }),
+      body: JSON.stringify({ title: title.trim(), description: description.trim(), deadline, completed, color_code }),
     })
     if (response.ok) {
       setNotification("success", "Created the task successfully", 3)
@@ -135,6 +141,7 @@ export default function useTasks() {
       return true
     } else {
       const result = await response.json()
+      
       if (result?.statusCode === 400) {
         setNotification("error", result?.message?.[0], 3)
       } else {

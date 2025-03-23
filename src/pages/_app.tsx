@@ -11,7 +11,7 @@ export default function App({ Component, pageProps, router }: AppProps) {
 	return (
 		<>
 			<Head>
-				<title>To-Do App</title>
+				<title>To-Do List</title>
 				<meta name="description" content="An app to list your tasks to be done" />
 			</Head>
 			{isProtectedRoute ? (

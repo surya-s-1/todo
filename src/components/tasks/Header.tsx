@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { CgProfile } from "react-icons/cg";
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
 
 export default function Header({ username }: { username: string }) {
     const [profileOpen, setProfileOpen] = useState(false)
@@ -14,8 +15,11 @@ export default function Header({ username }: { username: string }) {
 
     return (
         <>
-            <div className="flex flex-row items-baseline justify-between py-2">
-                <h2 className="ml-8">Hello, {username}!</h2>
+            <div className="flex flex-row items-baseline justify-between shadow-md py-4 sticky top-0 z-10 bg-white/50 backdrop-blur-sm">
+                <div className="flex flex-row items-center gap-4 ml-8">
+                    <IoCheckmarkDoneCircleOutline size={48} />
+                    <h2>To-Do List</h2>
+                </div>
                 <div className="flex flex-row items-start gap-4 px-4">
                     <div className="relative">
                         <CgProfile
@@ -24,7 +28,7 @@ export default function Header({ username }: { username: string }) {
                             className="cursor-pointer"
                         />
                         {profileOpen && (
-                            <div className="absolute right-0 mt-4 w-fit bg-gray-100 rounded-2xl shadow-md">
+                            <div className="absolute right-0 mt-6 w-fit bg-gray-100 rounded-2xl shadow-md">
                                 <span className="block px-6 py-3">{username}</span>
                                 <button 
                                     className="px-6 py-3 text-red-500 cursor-pointer"
