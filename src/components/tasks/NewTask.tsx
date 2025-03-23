@@ -1,8 +1,11 @@
+import { useRouter } from 'next/router'
+import { COLORS } from '../utility'
 import { useNotifications } from '../wrappers/NotificationWrapper'
 import OpenTask from './OpenTask'
 
 export default function NewTask() {
     const { setNotification } = useNotifications()
+    const router = useRouter()
 
     async function createTask(title: string, description: string, deadline: Date | null, completed: boolean, color_code: string) {
         const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/create`, {
@@ -15,9 +18,9 @@ export default function NewTask() {
         })
 
         if (response.ok) {
-            const result = await response.text()
             setNotification('success', "Created the task successfully", 3)
-            console.log(result)
+
+            router.push('/tasks')
         } else {
             const result = await response.json()
 
@@ -34,7 +37,7 @@ export default function NewTask() {
             _title={''}
             _description={''}
             _deadline={null}
-            _color_code={'#FFFFFF'}
+            _color_code={COLORS[Math.floor(Math.random() * COLORS.length)]}
             _completed={false}
             _button_name='Create'
             onSubmit={createTask}

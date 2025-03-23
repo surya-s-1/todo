@@ -1,5 +1,7 @@
 import ClosedTask from "@/components/tasks/ClosedTask";
 import Header from "@/components/tasks/Header";
+import Modal from "@/components/tasks/Modal";
+import OpenTask from "@/components/tasks/OpenTask";
 import { useAuth } from "@/components/wrappers/AuthWrapper";
 import { useNotifications } from "@/components/wrappers/NotificationWrapper";
 import { useEffect, useState } from "react";
@@ -10,12 +12,14 @@ interface TaskValues {
   description: string | null
   deadline: Date | null
   completed: boolean
-  color_code: string
+  color_code: string | null
 }
 
 export default function Home() {
   const { user } = useAuth()
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState<Array<TaskValues>>([])
+  const [modalOpen, setModalOpen] = useState(false)
+  const [selected, setSelected] = useState<TaskValues | null>(null)
   const { setNotification } = useNotifications()
 
   async function fetchTasks() {
@@ -51,7 +55,8 @@ export default function Home() {
     
     if (response.ok) {
       setNotification('success', "Deleted the task", 3)
-      await fetchTasks()
+      handleModalClose()
+      fetchTasks()
     } else {
       setNotification('error', 'Unable to delete the task', 3)
     }
@@ -78,6 +83,42 @@ export default function Home() {
     }
   }
 
+  async function updateTask(title: string, description: string, deadline: Date | null, completed: boolean, color_code: string) {
+    const response =  await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/update`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      },
+      body: JSON.stringify({
+        task_id: selected?.id,
+        title,
+        description,
+        deadline,
+        completed,
+        color_code
+      })
+    })
+    
+    if (response.ok) {
+      setNotification('success', "Updated the task", 3)
+      handleModalClose()
+      fetchTasks()
+    } else {
+      setNotification('error', 'Unable to update the task', 3)
+    }
+  }
+
+  function handleSelectTask(id: string) {
+    setSelected(tasks.find(el => el.id === id) || null)
+    setModalOpen(true)
+  }
+
+  function handleModalClose() {
+    setSelected(null)
+    setModalOpen(false)
+  }
+
   useEffect(()=>{
     fetchTasks()    
   }, [])
@@ -93,13 +134,28 @@ export default function Home() {
             _title={task.title}
             _description={task.description || ''}
             _completed={task.completed}
-            _color_code={task.color_code}
+            _color_code={task.color_code || '#FFFFFF'}
             _deadline={task.deadline}
+            onSelect={handleSelectTask}
             updateComplete={markCompleteTask}
             onDelete={deleteTask}
           />
         ))}
       </div>
+      {selected &&
+      <Modal isOpen={modalOpen} onClose={()=>handleModalClose()}>
+        <OpenTask
+          _id={selected.id}
+          _title={selected.title}
+          _description={selected.description || ''}
+          _completed={selected.completed}
+          _color_code={selected.color_code || '#FFFFFF'}
+          _deadline={selected.deadline}
+          _button_name="Update"
+          onSubmit={updateTask}
+          onDelete={deleteTask}
+        />
+    </Modal>}
     </div>
   )
 }

@@ -5,6 +5,7 @@ import { IoMdCloseCircle } from "react-icons/io"
 import { MdDone, MdDelete } from "react-icons/md"
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
+import { COLORS } from '../utility'
 
 interface OpenTaskArguments {
     _id?: string
@@ -33,11 +34,6 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
         setDeadline(date)
         setShowCalendar(false)
     }
-
-    const colors = [
-        "#F7BFA8", "#E8E274", "#97E874", "#74E8E8",
-        "#96B8EB", "#B498F5", "#F7A8E0", "#FFFFFF"
-    ]
 
     return (
         <div className={`flex flex-col rounded-xl p-2`} style={{ backgroundColor: color_code }}>
@@ -75,7 +71,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                         className='flex flex-row items-center gap-2 text-sm'
                     >
                         <FaRegCalendarAlt size={16} />
-                        {deadline ? deadline.toDateString() : 'Deadline'}
+                        {deadline ? new Date(deadline).toDateString() : 'Deadline'}
                     </div>
                     {deadline && (
                         <span
@@ -100,7 +96,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                 )}
                 <button
                     className='custom-button custom-button-info'
-                    onClick={() => onSubmit(title, description, deadline, completed, colors[Math.floor(Math.random() * colors.length)])}
+                    onClick={() => onSubmit(title, description, deadline, completed, color_code)}
                 >
                     <MdDone size={20} />
                     {_button_name}
@@ -116,7 +112,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                             </button>
                             {showColorPicker && (
                             <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 p-2 bg-white shadow-lg rounded-lg">
-                                {colors.map((color) => (
+                                {COLORS.map((color) => (
                                     <button
                                         key={color}
                                         className="w-6 h-6 rounded-full border-1 border-gray-300 cursor-pointer"
