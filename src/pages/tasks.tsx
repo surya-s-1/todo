@@ -80,9 +80,9 @@ export default function Home() {
             _color_code={selected.color_code || "#FFFFFF"}
             _deadline={selected.deadline}
             _button_name="Update"
-            onSubmit={(title, desc, deadline, completed, color_code) => {
-              updateTask(selected.id, title, desc, deadline, completed, color_code)
-              handleModalClose()
+            onSubmit={async (title, desc, deadline, completed, color_code) => {
+              const success = await updateTask(selected.id, title, desc, deadline, completed, color_code)
+              if (success) handleModalClose()
             }
             }
             onDelete={(id: string) => {
@@ -102,9 +102,9 @@ export default function Home() {
             _color_code={COLORS[Math.floor(Math.random() * COLORS.length)]}
             _completed={false}
             _button_name="Create"
-            onSubmit={(...props) => {
-              createTask(...props)
-              handleModalClose()
+            onSubmit={async (...props) => {
+              const success = await createTask(...props)
+              if (success) handleModalClose()
             }}
           />
         </Modal>
@@ -115,11 +115,16 @@ export default function Home() {
           <div className="bg-white p-6 rounded-lg shadow-md w-80 text-center">
             <p className="text-lg font-semibold mb-4">Are you sure you want to delete?</p>
             <div className="flex justify-evenly">
-              <button className="custom-button custom-button-alert" onClick={() => {
-                deleteTask(deleteId)
-                setDeleteId('')
-                handleModalClose()
-              }}>
+              <button 
+                className="custom-button custom-button-alert" 
+                onClick={async () => {
+                  const success = await deleteTask(deleteId)
+                  if (success) {
+                    setDeleteId('')
+                    handleModalClose()
+                  }
+                }}
+              >
                 Yes
               </button>
               <button className="custom-button" onClick={() => handleModalClose()}>

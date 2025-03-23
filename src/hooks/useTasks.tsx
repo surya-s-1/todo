@@ -24,6 +24,7 @@ export default function useTasks() {
     })
     if (response.ok) {
       const result: Array<TaskValues> = await response.json()
+
       if (result?.length === 0) {
         setNotification("info", "No tasks found. Start now :-)", 3)
       }
@@ -44,8 +45,12 @@ export default function useTasks() {
     if (response.ok) {
       setNotification("success", "Deleted the task", 3)
       fetchTasks()
+
+      return true
     } else {
       setNotification("error", "Unable to delete the task", 3)
+
+      return false
     }
   }
 
@@ -64,8 +69,12 @@ export default function useTasks() {
     if (response.ok) {
       setNotification("success", "Updated the task", 3)
       fetchTasks()
+
+      return true
     } else {
       setNotification("error", "Unable to update the task", 3)
+
+      return false
     }
   }
 
@@ -95,8 +104,12 @@ export default function useTasks() {
     if (response.ok) {
       setNotification("success", "Updated the task", 3)
       fetchTasks()
+
+      return true
     } else {
       setNotification("error", "Unable to update the task", 3)
+      
+      return false
     }
   }
 
@@ -118,6 +131,8 @@ export default function useTasks() {
     if (response.ok) {
       setNotification("success", "Created the task successfully", 3)
       fetchTasks()
+
+      return true
     } else {
       const result = await response.json()
       if (result?.statusCode === 400) {
@@ -125,6 +140,8 @@ export default function useTasks() {
       } else {
         setNotification("error", "Unable to create the task", 3)
       }
+
+      return false
     }
   }
 
