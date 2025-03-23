@@ -20,11 +20,11 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
 
     return (
         <div 
-            className={`flex flex-col rounded-md p-2 w-48 h-44 gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: _color_code }}
+            className={`flex flex-col rounded-md p-2 w-64 h-fit gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: _color_code }}
             onClick={() => onSelect(_id)}
         >
             <div className='flex items-center justify-between gap-2'>
-                <span className='text-md p-1 w-full border-0 outline-0 bg-transparent text-ellipsis overflow-hidden whitespace-nowrap'>
+                <span className='text-md p-1 w-full text-ellipsis overflow-hidden whitespace-nowrap'>
                     {_title}
                 </span>
                 <div onClick={e => e.stopPropagation()}>
@@ -38,11 +38,11 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
                 </div>
             </div>
 
-            <p className='text-sm text-gray-600 p-1 border-0 outline-0 h-24 resize-none overflow-hidden line-clamp-3'>
+            <p className='text-sm text-gray-600 p-1 resize-none overflow-hidden line-clamp-5'>
                 {_description}
             </p>
 
-            <div className='flex items-center justify-between gap-2'>
+            <div className='flex items-center justify-between'>
                 <button className={`custom-button custom-button-small ${passedDeadline ? 'custom-button-alert' : ''}`}>
                     <div className='flex items-center gap-2 text-xs'>
                         <FaRegCalendarAlt size={12} />

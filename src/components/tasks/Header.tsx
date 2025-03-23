@@ -18,7 +18,7 @@ export default function Header({ username }: { username: string }) {
     return (
         <>
             <div className="flex flex-row items-baseline justify-between py-2">
-                <h2>Hello, {username}!</h2>
+                <h2 className="ml-8">Hello, {username}!</h2>
                 <div className="flex flex-row items-start gap-4 px-4">
                     <button
                         className="my-0 mx-2 px-4 py-2 bg-blue-500 text-white rounded cursor-pointer"

@@ -120,6 +120,7 @@ export default function Home() {
   }
 
   useEffect(()=>{
+    document.title = 'Your Tasklist | To-Do App'
     fetchTasks()    
   }, [])
 
