@@ -1,10 +1,12 @@
 import ClosedTask from "@/components/tasks/ClosedTask";
 import Header from "@/components/tasks/Header";
 import Modal from "@/components/tasks/Modal";
+import NewTask from "@/components/tasks/NewTask";
 import OpenTask from "@/components/tasks/OpenTask";
 import { useAuth } from "@/components/wrappers/AuthWrapper";
 import { useNotifications } from "@/components/wrappers/NotificationWrapper";
 import { useEffect, useState } from "react";
+import { FaPlus } from "react-icons/fa"
 
 interface TaskValues {
   id: string
@@ -20,6 +22,7 @@ export default function Home() {
   const [tasks, setTasks] = useState<Array<TaskValues>>([])
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<TaskValues | null>(null)
+  const [newTask, setNewTask] = useState(false)
   const { setNotification } = useNotifications()
 
   async function fetchTasks() {
@@ -115,6 +118,7 @@ export default function Home() {
   }
 
   function handleModalClose() {
+    setNewTask(false)
     setSelected(null)
     setModalOpen(false)
   }
@@ -127,7 +131,7 @@ export default function Home() {
   return (
     <div>
       <Header username={user.username} />
-      <div className='flex flex-row gap-4 p-4'>
+      <div className='grid grid-cols-5 gap-4 p-8 auto-rows-fr'>
         {tasks.map((task: TaskValues) => (
           <ClosedTask
             key={task.id}
@@ -142,6 +146,18 @@ export default function Home() {
             onDelete={deleteTask}
           />
         ))}
+        <div 
+          className="border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer"
+          onClick={() => {
+            setNewTask(true)
+            setModalOpen(true)
+          }}
+        >
+          <FaPlus 
+            color="#d1d5dc"
+            size={60}
+          />
+        </div>
       </div>
       {selected &&
       <Modal isOpen={modalOpen} onClose={()=>handleModalClose()}>
@@ -156,7 +172,11 @@ export default function Home() {
           onSubmit={updateTask}
           onDelete={deleteTask}
         />
-    </Modal>}
+      </Modal>}
+      {newTask &&
+      <Modal isOpen={modalOpen} onClose={()=>handleModalClose()}>
+          <NewTask />
+      </Modal>}
     </div>
   )
 }

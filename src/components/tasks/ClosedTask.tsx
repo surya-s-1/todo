@@ -20,7 +20,7 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
 
     return (
         <div 
-            className={`flex flex-col rounded-md p-2 w-64 h-fit gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: _color_code }}
+            className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: _color_code }}
             onClick={() => onSelect(_id)}
         >
             <div className='flex items-center justify-between gap-2'>
@@ -38,7 +38,7 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
                 </div>
             </div>
 
-            <p className='text-sm text-gray-600 p-1 resize-none overflow-hidden line-clamp-5'>
+            <p className='text-sm text-gray-600 p-1 resize-none overflow-hidden h-30 line-clamp-5'>
                 {_description}
             </p>
 
@@ -46,7 +46,7 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
                 <button className={`custom-button custom-button-small ${passedDeadline ? 'custom-button-alert' : ''}`}>
                     <div className='flex items-center gap-2 text-xs'>
                         <FaRegCalendarAlt size={12} />
-                        {_deadline && new Date(_deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        {_deadline ? new Date(_deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'No Deadline'}
                     </div>
                 </button>
                 <button
