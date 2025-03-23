@@ -156,14 +156,18 @@ export default function Home() {
 
   useEffect(()=>{
     document.title = 'Your Tasklist | To-Do App'
-    fetchTasks()    
+    fetchTasks()
   }, [])
 
   useEffect(()=>{
     if (tasks.length > 0 && router.asPath.includes('#')) {
       const hashId = router.asPath.split("#")[1]
-      setSelected(tasks.find(el => el.id === hashId) || null)
-      setModalOpen(true)
+      const task = tasks.find(el => el.id === hashId)
+      if (task) {
+        setSelected(task)
+        setModalOpen(true)
+        document.title = task.title
+      }
     }
   }, [tasks, router.asPath])
 
