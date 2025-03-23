@@ -57,6 +57,27 @@ export default function Home() {
     }
   }
 
+  async function markCompleteTask(id: string, complete: boolean) {
+    const response =  await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/mark-complete`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`
+      },
+      body: JSON.stringify({
+        task_id: id,
+        completed: complete
+      })
+    })
+    
+    if (response.ok) {
+      setNotification('success', "Updated the task", 3)
+      await fetchTasks()
+    } else {
+      setNotification('error', 'Unable to update the task', 3)
+    }
+  }
+
   useEffect(()=>{
     fetchTasks()    
   }, [])
@@ -74,6 +95,7 @@ export default function Home() {
             _completed={task.completed}
             _color_code={task.color_code}
             _deadline={task.deadline}
+            updateComplete={markCompleteTask}
             onDelete={deleteTask}
           />
         ))}
