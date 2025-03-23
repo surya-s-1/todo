@@ -33,6 +33,20 @@ h1, h2, h3, h4, h5, h6, p {
   }
 }
 
-.animate-notification {
-  animation: notification-fade-in 0.3s ease-out;
+@layer components {
+  .custom-button {
+    @apply flex items-center gap-2 p-2 rounded-md transition-colors bg-gray-200 text-gray-600 duration-300 cursor-pointer;
+  }
+
+  .custom-button-alert {
+    @apply bg-red-400 text-gray-600;
+  }
+
+  .custom-button-info {
+    @apply bg-blue-400 text-white;
+  }
+
+  .animate-notification {
+    animation: notification-fade-in 0.3s ease-out;
+  }
 }
