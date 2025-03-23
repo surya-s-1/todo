@@ -103,7 +103,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                 </button>
                 {_id &&
                     <div className='flex flex-row items-center gap-5'>
-                        <div className="relative">
+                        <div className="flex flex-row relative items-center">
                             <button
                                 onClick={() => setShowColorPicker(!showColorPicker)}
                                 className="w-6 h-6 rounded-full border border-black shadow-2xl cursor-pointer"

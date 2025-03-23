@@ -26,6 +26,7 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<TaskValues | null>(null)
   const [newTask, setNewTask] = useState(false)
+  const [deleteId, setDeleteId] = useState('')
   const { setNotification } = useNotifications()
 
   async function fetchTasks() {
@@ -140,9 +141,15 @@ export default function Home() {
       }
   }
 
+  function confirmDelete(id: string) {
+    setModalOpen(true)
+    setDeleteId(id)
+  }
+
   function handleModalClose() {
     setNewTask(false)
     setSelected(null)
+    setDeleteId('')
     setModalOpen(false)
     router.push('/tasks', undefined, { shallow: true })
   }
@@ -174,7 +181,7 @@ export default function Home() {
             _color_code={task.color_code || '#FFFFFF'}
             _deadline={task.deadline}
             updateComplete={markCompleteTask}
-            onDelete={deleteTask}
+            onDelete={confirmDelete}
           />
         ))}
         <div 
@@ -201,7 +208,7 @@ export default function Home() {
           _deadline={selected.deadline}
           _button_name="Update"
           onSubmit={updateTask}
-          onDelete={deleteTask}
+          onDelete={confirmDelete}
         />
       </Modal>}
       {newTask &&
@@ -216,6 +223,27 @@ export default function Home() {
             onSubmit={createTask}
         />
       </Modal>}
+      {deleteId &&
+      <Modal isOpen={modalOpen} onClose={()=>handleModalClose()}>
+        <div className="bg-white p-6 rounded-lg shadow-md w-80 text-center">
+          <p className="text-lg font-semibold mb-4">Are you sure you want to delete?</p>
+          <div className="flex justify-evenly">
+            <button 
+              className="custom-button custom-button-alert"
+              onClick={() => deleteTask(deleteId)}
+            >
+              Yes
+            </button>
+            <button 
+              className="custom-button"
+              onClick={() => handleModalClose()}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
+      }
     </div>
   )
 }
