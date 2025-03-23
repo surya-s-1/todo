@@ -100,7 +100,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                 )}
                 <button
                     className='custom-button custom-button-info'
-                    onClick={() => onSubmit(title, description, deadline, completed, color_code)}
+                    onClick={() => onSubmit(title, description, deadline, completed, colors[Math.floor(Math.random() * colors.length)])}
                 >
                     <MdDone size={20} />
                     {_button_name}
