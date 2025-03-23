@@ -3,6 +3,7 @@ import { FaRegCalendarAlt } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
 import 'react-calendar/dist/Calendar.css'
 import { useRouter } from 'next/router'
+import { formatDeadline } from '../utility'
 
 interface ClosedTask {
     _id: string
@@ -17,7 +18,7 @@ interface ClosedTask {
 
 export default function ClosedTask({ _id, _title, _description, _deadline, _completed, _color_code, updateComplete, onDelete }: ClosedTask) {
     const router = useRouter()
-    const passedDeadline = _deadline ? new Date(_deadline).setHours(0, 0, 0, 0) < new Date().setHours(0, 0, 0, 0) : false
+    const deadlineOver = _deadline ? new Date(_deadline) < new Date() : false
 
     return (
         <div 
@@ -44,10 +45,10 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
             </p>
 
             <div className='flex items-center justify-between'>
-                <button className={`custom-button custom-button-small ${_deadline && 'custom-button-info'} ${passedDeadline ? 'custom-button-alert' : ''}`}>
+                <button className={`custom-button ${_deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''}`}>
                     <div className='flex items-center gap-2 text-xs'>
                         <FaRegCalendarAlt size={12} />
-                        {_deadline ? new Date(_deadline).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : 'No Deadline'}
+                        {formatDeadline(_deadline, 'short')}
                     </div>
                 </button>
                 <button

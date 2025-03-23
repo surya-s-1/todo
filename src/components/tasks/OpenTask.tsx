@@ -5,7 +5,7 @@ import { IoMdCloseCircle } from "react-icons/io"
 import { MdDone, MdDelete } from "react-icons/md"
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import { COLORS } from '../utility'
+import { COLORS, formatDeadline } from '../utility'
 
 interface OpenTaskArguments {
     _id?: string
@@ -71,7 +71,7 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                         className='flex flex-row items-center gap-2 text-sm'
                     >
                         <FaRegCalendarAlt size={16} />
-                        {deadline ? new Date(deadline).toDateString() : 'No Deadline'}
+                        {formatDeadline(deadline)}
                     </div>
                     {deadline && (
                         <span
