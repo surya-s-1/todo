@@ -20,7 +20,7 @@ export default function NewTask() {
         if (response.ok) {
             setNotification('success', "Created the task successfully", 3)
 
-            router.push('/tasks')
+            router.reload()
         } else {
             const result = await response.json()
 
