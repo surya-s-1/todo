@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 import useTasks, { TaskValues } from '@/hooks/useTasks'
-import { COLORS } from '@/components/utility'
+import { COLORS, NEW_TASK } from '@/components/utility'
 
 export default function Home() {
   const { user } = useAuth()
@@ -73,12 +73,7 @@ export default function Home() {
         {filteredTasks.map((task: TaskValues) => (
           <ClosedTask
             key={task.id}
-            _id={task.id}
-            _title={task.title}
-            _description={task.description || ''}
-            _completed={task.completed}
-            _color_code={task.color_code || '#FFFFFF'}
-            _deadline={task.deadline}
+            task={task}
             updateComplete={markCompleteTask}
             onDelete={(id: string) => {
               setModalOpen(true)
@@ -100,13 +95,8 @@ export default function Home() {
       {selected && (
         <Modal isOpen={modalOpen} onClose={() => handleModalClose()}>
           <OpenTask
-            _id={selected.id}
-            _title={selected.title}
-            _description={selected.description || ''}
-            _completed={selected.completed}
-            _color_code={selected.color_code || '#FFFFFF'}
-            _deadline={selected.deadline}
-            _button_name='Update'
+            task={selected}
+            button_name='Update'
             onSubmit={async (title, desc, deadline, completed, color_code) => {
               const success = await updateTask(selected.id, title, desc, deadline, completed, color_code)
               if (success) handleModalClose()
@@ -123,12 +113,8 @@ export default function Home() {
       {newTask && (
         <Modal isOpen={modalOpen} onClose={() => handleModalClose()}>
           <OpenTask
-            _title={''}
-            _description={''}
-            _deadline={null}
-            _color_code={COLORS[Math.floor(Math.random() * COLORS.length)]}
-            _completed={false}
-            _button_name='Create'
+            task={NEW_TASK}
+            button_name='Create'
             onSubmit={async (...props) => {
               const success = await createTask(...props)
               if (success) handleModalClose()

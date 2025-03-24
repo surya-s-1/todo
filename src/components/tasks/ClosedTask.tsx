@@ -4,52 +4,48 @@ import 'react-calendar/dist/Calendar.css'
 import { useRouter } from 'next/router'
 import { formatDeadline } from '../utility'
 import Checkbox from './Checkbox'
+import { ExistingTask } from "./types"
 
 interface ClosedTask {
-    _id: string
-    _title: string
-    _description: string
-    _deadline: Date | null
-    _completed: boolean
-    _color_code: string
+    task: ExistingTask
     updateComplete: (id: string, complete: boolean) => void
     onDelete: (id: string) => void
 }
 
-export default function ClosedTask({ _id, _title, _description, _deadline, _completed, _color_code, updateComplete, onDelete }: ClosedTask) {
+export default function ClosedTask({ task, updateComplete, onDelete }: ClosedTask) {
     const router = useRouter()
-    const deadlineOver = _deadline ? new Date(_deadline) < new Date() : false
+    const deadlineOver = task.deadline ? new Date(task.deadline) < new Date() : false
 
     return (
         <div 
-            className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: _color_code }}
-            onClick={() => router.push(`/tasks/#${_id}`)}
+            className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: task.color_code || '#FFFFFF' }}
+            onClick={() => router.push(`/tasks/#${task.id}`)}
         >
             <div className='flex items-center justify-between gap-2'>
                 <span className='text-md p-1 w-full text-ellipsis overflow-hidden whitespace-nowrap'>
-                    {_title}
+                    {task.title}
                 </span>
                 <div onClick={e => e.stopPropagation()}>
                     <Checkbox 
-                        checked={_completed} 
-                        onChange={(e: boolean) => updateComplete(_id, e)}
+                        checked={task.completed} 
+                        onChange={(e: boolean) => updateComplete(task.id, e)}
                         size='small'
                     />
                 </div>
             </div>
 
             <p className='text-sm text-gray-600 p-1 resize-none overflow-hidden h-30 line-clamp-5'>
-                {_description}
+                {task.description}
             </p>
 
             <div className='flex items-center justify-between'>
-                <button className={`custom-button custom-button-small ${_deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''} ${_completed && 'custom-button-success'}`}>
+                <button className={`custom-button custom-button-small ${task.deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''} ${task.completed && 'custom-button-success'}`}>
                     <FaRegCalendarAlt size={12} />
-                    {formatDeadline(_deadline, 'short')}
+                    {formatDeadline(task.deadline, 'short')}
                 </button>
                 <button
                     onClick={(e) => {
-                        onDelete(_id)
+                        onDelete(task.id)
                         e.stopPropagation()
                     }}
                     className="custom-button custom-button-alert custom-button-small"
