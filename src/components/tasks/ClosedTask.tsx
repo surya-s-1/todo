@@ -43,7 +43,7 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
             </p>
 
             <div className='flex items-center justify-between'>
-                <button className={`custom-button custom-button-small ${_deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''}`}>
+                <button className={`custom-button custom-button-small ${_deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''} ${_completed && 'custom-button-success'}`}>
                     <FaRegCalendarAlt size={12} />
                     {formatDeadline(_deadline, 'short')}
                 </button>

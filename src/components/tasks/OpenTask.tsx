@@ -60,14 +60,10 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
             <div className='flex flex-row items-center justify-between gap-2 px-4'>
                 <button
                     onClick={() => setShowCalendar(!showCalendar)}
-                    className={`custom-button ${deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''}`}
+                    className={`custom-button ${deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''} ${completed && 'custom-button-success'}`}
                 >
-                    <div
-                        className='flex flex-row items-center gap-2 text-sm'
-                    >
                         <FaRegCalendarAlt size={16} />
                         {formatDeadline(deadline)}
-                    </div>
                     {deadline && (
                         <span
                             className="cursor-pointer"
