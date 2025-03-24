@@ -1,13 +1,13 @@
-import ClosedTask from "@/components/tasks/ClosedTask"
-import Header from "@/components/Header"
-import Modal from "@/components/Modal"
-import OpenTask from "@/components/tasks/OpenTask"
-import { useAuth } from "@/wrappers/AuthWrapper"
-import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
-import { FaPlus } from "react-icons/fa"
-import useTasks, { TaskValues } from "@/hooks/useTasks"
-import { COLORS } from "@/components/utility"
+import ClosedTask from '@/components/tasks/ClosedTask'
+import Header from '@/components/Header'
+import Modal from '@/components/Modal'
+import OpenTask from '@/components/tasks/OpenTask'
+import { useAuth } from '@/wrappers/AuthWrapper'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import { FaPlus } from 'react-icons/fa'
+import useTasks, { TaskValues } from '@/hooks/useTasks'
+import { COLORS } from '@/components/utility'
 
 export default function Home() {
   const { user } = useAuth()
@@ -16,19 +16,20 @@ export default function Home() {
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<TaskValues | null>(null)
   const [newTask, setNewTask] = useState(false)
-  const [deleteId, setDeleteId] = useState("")
+  const [deleteId, setDeleteId] = useState('')
+  const [filter, setFilter] = useState<'all' | 'ongoing' | 'completed'>('ongoing')
 
   function handleModalClose() {
     setNewTask(false)
     setSelected(null)
-    setDeleteId("")
+    setDeleteId('')
     setModalOpen(false)
-    router.push("/tasks", undefined, { shallow: true })
+    router.push('/tasks', undefined, { shallow: true })
   }
 
   useEffect(() => {
-    if (tasks.length > 0 && router.asPath.includes("#")) {
-      const hashId = router.asPath.split("#")[1]
+    if (tasks.length > 0 && router.asPath.includes('#')) {
+      const hashId = router.asPath.split('#')[1]
       const task = tasks.find((t) => t.id === hashId)
       if (task) {
         setSelected(task)
@@ -38,18 +39,45 @@ export default function Home() {
     }
   }, [tasks, router.asPath])
 
+  const filteredTasks = tasks.filter((task) => {
+    if (filter === 'all') return true
+    if (filter === 'ongoing') return !task.completed
+    if (filter === 'completed') return task.completed
+    return true
+  })
+
   return (
     <div>
       <Header username={user.username} />
-      <div className="grid grid-cols-5 gap-4 p-8 auto-rows-fr">
-        {tasks.map((task: TaskValues) => (
+      <div className='flex gap-4 m-4 mx-8'>
+        <button
+          className={`filter-button ${filter === 'all' && 'filter-button-selected'}`}
+          onClick={() => setFilter('all')}
+        >
+          All
+        </button>
+        <button
+          className={`filter-button ${filter === 'ongoing' && 'filter-button-selected'}`}
+          onClick={() => setFilter('ongoing')}
+        >
+          Ongoing
+        </button>
+        <button
+          className={`filter-button ${filter === 'completed' && 'filter-button-selected'}`}
+          onClick={() => setFilter('completed')}
+        >
+          Completed
+        </button>
+      </div>
+      <div className='grid grid-cols-5 gap-4 px-8 py-2 auto-rows-fr'>
+        {filteredTasks.map((task: TaskValues) => (
           <ClosedTask
             key={task.id}
             _id={task.id}
             _title={task.title}
-            _description={task.description || ""}
+            _description={task.description || ''}
             _completed={task.completed}
-            _color_code={task.color_code || "#FFFFFF"}
+            _color_code={task.color_code || '#FFFFFF'}
             _deadline={task.deadline}
             updateComplete={markCompleteTask}
             onDelete={(id: string) => {
@@ -59,13 +87,13 @@ export default function Home() {
           />
         ))}
         <div
-          className="border-2 border-dashed border-gray-300 flex items-center justify-center cursor-pointer"
+          className='border-2 border-dashed border-gray-300 flex items-center justify-center py-16 cursor-pointer'
           onClick={() => {
             setNewTask(true)
             setModalOpen(true)
           }}
         >
-          <FaPlus color="#d1d5dc" size={60} />
+          <FaPlus color='#d1d5dc' size={60} />
         </div>
       </div>
 
@@ -74,11 +102,11 @@ export default function Home() {
           <OpenTask
             _id={selected.id}
             _title={selected.title}
-            _description={selected.description || ""}
+            _description={selected.description || ''}
             _completed={selected.completed}
-            _color_code={selected.color_code || "#FFFFFF"}
+            _color_code={selected.color_code || '#FFFFFF'}
             _deadline={selected.deadline}
-            _button_name="Update"
+            _button_name='Update'
             onSubmit={async (title, desc, deadline, completed, color_code) => {
               const success = await updateTask(selected.id, title, desc, deadline, completed, color_code)
               if (success) handleModalClose()
@@ -95,12 +123,12 @@ export default function Home() {
       {newTask && (
         <Modal isOpen={modalOpen} onClose={() => handleModalClose()}>
           <OpenTask
-            _title={""}
-            _description={""}
+            _title={''}
+            _description={''}
             _deadline={null}
             _color_code={COLORS[Math.floor(Math.random() * COLORS.length)]}
             _completed={false}
-            _button_name="Create"
+            _button_name='Create'
             onSubmit={async (...props) => {
               const success = await createTask(...props)
               if (success) handleModalClose()
@@ -111,11 +139,11 @@ export default function Home() {
 
       {deleteId && (
         <Modal isOpen={modalOpen} onClose={() => handleModalClose()}>
-          <div className="bg-white p-6 rounded-lg shadow-md w-80 text-center">
-            <p className="text-lg font-semibold mb-4">Are you sure you want to delete?</p>
-            <div className="flex justify-evenly">
+          <div className='bg-white p-6 rounded-lg shadow-md w-80 text-center'>
+            <p className='text-lg font-semibold mb-4'>Are you sure you want to delete?</p>
+            <div className='flex justify-evenly'>
               <button 
-                className="custom-button custom-button-alert" 
+                className='custom-button custom-button-alert' 
                 onClick={async () => {
                   const success = await deleteTask(deleteId)
                   if (success) {
@@ -126,7 +154,7 @@ export default function Home() {
               >
                 Yes
               </button>
-              <button className="custom-button" onClick={() => handleModalClose()}>
+              <button className='custom-button' onClick={() => handleModalClose()}>
                 Cancel
               </button>
             </div>

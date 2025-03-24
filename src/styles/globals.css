@@ -50,6 +50,14 @@ h1, h2, h3, h4, h5, h6, p {
     @apply gap-1 p-1 rounded-sm text-sm
   }
 
+  .filter-button {
+    @apply flex items-center gap-2 p-2 rounded-sm transition-colors bg-gray-200 hover:bg-gray-300 text-gray-600 duration-150 cursor-pointer;
+  }
+
+  .filter-button-selected {
+    @apply bg-blue-200 hover:bg-blue-200 text-blue-500;
+  }
+
   .animate-notification {
     animation: notification-fade-in 0.3s ease-out;
   }
