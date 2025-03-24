@@ -1,5 +1,5 @@
-import AuthWrapper from "@/components/wrappers/AuthWrapper";
-import NotificationWrapper from "@/components/wrappers/NotificationWrapper";
+import AuthWrapper from "@/wrappers/AuthWrapper";
+import NotificationWrapper from "@/wrappers/NotificationWrapper";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";

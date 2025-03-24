@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { useNotifications } from "@/components/wrappers/NotificationWrapper"
+import { useNotifications } from "@/wrappers/NotificationWrapper"
 
 export interface TaskValues {
   id: string
