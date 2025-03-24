@@ -1,9 +1,9 @@
-import Switch from 'react-switch'
 import { FaRegCalendarAlt } from "react-icons/fa"
 import { MdDelete } from "react-icons/md"
 import 'react-calendar/dist/Calendar.css'
 import { useRouter } from 'next/router'
 import { formatDeadline } from '../utility'
+import Checkbox from './Checkbox'
 
 interface ClosedTask {
     _id: string
@@ -30,12 +30,10 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
                     {_title}
                 </span>
                 <div onClick={e => e.stopPropagation()}>
-                    <Switch
-                        className='z-0'
-                        onChange={(val) => updateComplete(_id, val)}
-                        checked={_completed}
-                        width={36}
-                        height={16}
+                    <Checkbox 
+                        checked={_completed} 
+                        onChange={(e: boolean) => updateComplete(_id, e)}
+                        size='small'
                     />
                 </div>
             </div>
@@ -45,18 +43,16 @@ export default function ClosedTask({ _id, _title, _description, _deadline, _comp
             </p>
 
             <div className='flex items-center justify-between'>
-                <button className={`custom-button ${_deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''}`}>
-                    <div className='flex items-center gap-2 text-xs'>
-                        <FaRegCalendarAlt size={12} />
-                        {formatDeadline(_deadline, 'short')}
-                    </div>
+                <button className={`custom-button custom-button-small ${_deadline ? (deadlineOver ? 'custom-button-alert': 'custom-button-info'): ''}`}>
+                    <FaRegCalendarAlt size={12} />
+                    {formatDeadline(_deadline, 'short')}
                 </button>
                 <button
                     onClick={(e) => {
                         onDelete(_id)
                         e.stopPropagation()
                     }}
-                    className="flex items-center gap-1 text-sm custom-button custom-button-alert custom-button-small"
+                    className="custom-button custom-button-alert custom-button-small"
                 >
                     <MdDelete size={16} />
                 </button>

@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import Switch from 'react-switch'
 import { FaRegCalendarAlt } from "react-icons/fa"
 import { IoMdCloseCircle } from "react-icons/io"
 import { MdDone, MdDelete } from "react-icons/md"
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { COLORS, formatDeadline } from '../utility'
+import Checkbox from './Checkbox'
 
 interface OpenTaskArguments {
     _id?: string
@@ -44,17 +44,12 @@ export default function OpenTask({ _id, _title, _description, _deadline, _comple
                     value={title}
                     onChange={e => setTitle(e.target.value)}
                 />
-                <div className='flex flex-row-reverse items-center gap-2 mx-1'>
-                    <span className='text-sm font-semibold text-gray-500'>
-                        Mark Complete
-                    </span>
-                    <Switch
-                        onChange={setCompleted}
-                        checked={completed}
-                        width={45}
-                        height={20}
-                    />
-                </div>
+                <Checkbox 
+                    checked={completed} 
+                    onChange={(e: boolean) => setCompleted(e)} 
+                    label='Mark Complete'
+                    size='normal'
+                />
             </div>
             <textarea
                 className='p-2 border-0 outline-0 h-52 resize-none overflow-auto'

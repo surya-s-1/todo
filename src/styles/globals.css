@@ -47,7 +47,7 @@ h1, h2, h3, h4, h5, h6, p {
   }
 
   .custom-button-small {
-    @apply gap-1 p-1 rounded-sm
+    @apply gap-1 p-1 rounded-sm text-sm
   }
 
   .animate-notification {
