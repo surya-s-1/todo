@@ -28,7 +28,7 @@ export default function Modal({ isOpen, onClose, children }: ModalArguments) {
                 setVisible(false);
                 setTimeout(() => onClose(), 200)
             }}
-            className={`fixed inset-0 w-full h-full bg-black/50 flex items-center justify-center transition-opacity duration-200 ${visible ? 'opacity-100' : 'opacity-0'}`}
+            className={`fixed z-20 inset-0 w-full h-full bg-black/50 flex items-center justify-center transition-opacity duration-200 ${visible ? 'opacity-100' : 'opacity-0'}`}
         >
             <div
                 onClick={e => e.stopPropagation()}
