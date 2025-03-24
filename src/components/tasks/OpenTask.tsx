@@ -88,7 +88,7 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
                     <MdDone size={20} />
                     {button_name}
                 </button>
-                {task &&
+                {task.id &&
                 <div className='flex flex-row items-center gap-5'>
                     <div className="flex flex-row relative items-center">
                         <button
