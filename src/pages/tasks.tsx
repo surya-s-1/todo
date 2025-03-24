@@ -1,5 +1,5 @@
 import ClosedTask from "@/components/tasks/ClosedTask"
-import Header from "@/components/tasks/Header"
+import Header from "@/components/Header"
 import Modal from "@/components/tasks/Modal"
 import OpenTask from "@/components/tasks/OpenTask"
 import { useAuth } from "@/components/wrappers/AuthWrapper"
