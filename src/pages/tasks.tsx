@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
 import useTasks, { TaskValues } from '@/hooks/useTasks'
-import { COLORS, NEW_TASK } from '@/components/utility'
+import { getNewTask } from '@/components/utility'
 
 export default function Home() {
   const { user } = useAuth()
@@ -113,7 +113,7 @@ export default function Home() {
       {newTask && (
         <Modal isOpen={modalOpen} onClose={() => handleModalClose()}>
           <OpenTask
-            task={NEW_TASK}
+            task={getNewTask()}
             button_name='Create'
             onSubmit={async (...props) => {
               const success = await createTask(...props)

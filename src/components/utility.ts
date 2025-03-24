@@ -2,14 +2,16 @@ import { NewTask } from "./tasks/types"
 
 export const COLORS = ['#F7BFA8', '#E8E274', '#97E874', '#74E8E8', '#96B8EB', '#B498F5', '#F7A8E0', '#FFFFFF']
 
-export const NEW_TASK: NewTask = {
-    id: null,
-    created_at: null,
-    title: '',
-    description: '',
-    deadline: null,
-    completed: false,
-    color_code: COLORS[Math.floor(Math.random() * COLORS.length)]
+export const getNewTask = (): NewTask => {
+    return {
+        id: null,
+        created_at: null,
+        title: '',
+        description: '',
+        deadline: null,
+        completed: false,
+        color_code: COLORS[Math.floor(Math.random() * COLORS.length)]
+    }
 }
 
 type DeadlineFormat = 'long' | 'short'
