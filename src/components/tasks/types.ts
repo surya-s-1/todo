@@ -8,7 +8,7 @@ interface Task {
 
 export interface ExistingTask extends Task {
     id: string
-    created_at: Date | null
+    created_at: Date
 }
 
 export interface NewTask extends Task {
