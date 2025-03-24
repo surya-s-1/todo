@@ -12,14 +12,31 @@ export function formatDeadline(deadline: Date | null, format: DeadlineFormat = '
     const target = new Date(deadline.getFullYear(), deadline.getMonth(), deadline.getDate())
 
     const diffInDays = (target.getTime() - today.getTime()) / (1000 * 3600 * 24)
+    const diffInMonths = Math.floor((target.getTime() - today.getTime()) / (1000 * 3600 * 24 * 30))
 
     if (diffInDays === 0) return "Today"
     if (diffInDays === 1) return "Tomorrow"
     if (diffInDays === -1) return "Yesterday"
 
     if (format === 'short') {
+        if (diffInMonths < 12) {
+            return `In ${diffInMonths} months`
+        }
+        
+        if (deadline.getFullYear() === now.getFullYear() + 1) {
+            return "Next Year"
+        }
+    
+        if (diffInMonths > 12 && diffInMonths < 24) {
+            return 'More than a year away'
+        }
+    
+        if (diffInMonths > 12) {
+            return `In ${Math.floor(diffInMonths / 12)} years`
+        }
+
         return deadline.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
     }
 
-    return new Date(deadline).toDateString()
-}  
+    return deadline.toDateString()
+}
