@@ -6,7 +6,8 @@ import { useAuth } from '@/wrappers/AuthWrapper'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
-import useTasks, { TaskValues } from '@/hooks/useTasks'
+import useTasks from '@/hooks/useTasks'
+import { ExistingTask } from '@/components/tasks/types'
 import { getNewTask } from '@/components/utility'
 
 export default function Home() {
@@ -14,7 +15,7 @@ export default function Home() {
   const router = useRouter()
   const { tasks, deleteTask, markCompleteTask, updateTask, createTask } = useTasks()
   const [modalOpen, setModalOpen] = useState(false)
-  const [selected, setSelected] = useState<TaskValues | null>(null)
+  const [selected, setSelected] = useState<ExistingTask | null>(null)
   const [newTask, setNewTask] = useState(false)
   const [deleteId, setDeleteId] = useState('')
   const [filter, setFilter] = useState<'all' | 'ongoing' | 'completed'>('ongoing')

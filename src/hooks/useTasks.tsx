@@ -1,18 +1,9 @@
 import { useState, useEffect } from "react"
 import { useNotifications } from "@/wrappers/NotificationWrapper"
-
-export interface TaskValues {
-  id: string
-  title: string
-  description: string | null
-  deadline: Date | null
-  completed: boolean
-  color_code: string | null
-  created_at: Date
-}
+import { ExistingTask } from "@/components/tasks/types"
 
 export default function useTasks() {
-  const [tasks, setTasks] = useState<Array<TaskValues>>([])
+  const [tasks, setTasks] = useState<Array<ExistingTask>>([])
   const { setNotification } = useNotifications()
 
   async function fetchTasks() {
@@ -23,7 +14,7 @@ export default function useTasks() {
       },
     })
     if (response.ok) {
-      const result: Array<TaskValues> = await response.json()
+      const result: Array<ExistingTask> = await response.json()
 
       if (result?.length === 0) {
         setNotification("info", "No tasks found. Start now :-)", 3)
@@ -35,44 +26,34 @@ export default function useTasks() {
     }
   }
 
-  async function deleteTask(id: string) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/delete/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-      },
-    })
-    if (response.ok) {
-      setNotification("success", "Deleted the task", 3)
-      fetchTasks()
-
-      return true
-    } else {
-      setNotification("error", "Unable to delete the task", 3)
-
-      return false
-    }
-  }
-
-  async function markCompleteTask(id: string, complete: boolean) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/mark-complete`, {
-      method: "PUT",
+  async function createTask(
+    title: string,
+    description: string,
+    deadline: Date | null,
+    completed: boolean,
+    color_code: string
+  ) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/create`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
-      body: JSON.stringify({
-        task_id: id,
-        completed: complete,
-      }),
+      body: JSON.stringify({ title: title.trim(), description: description.trim(), deadline, completed, color_code }),
     })
     if (response.ok) {
-      setNotification("success", complete ? "Marked the task completed" : "Marked the task incomplete", 3)
+      setNotification("success", "Created the task successfully", 3)
       fetchTasks()
 
       return true
     } else {
-      setNotification("error", "Unable to update the task", 3)
+      const result = await response.json()
+      
+      if (result?.statusCode === 400) {
+        setNotification("error", result?.message?.[0], 3)
+      } else {
+        setNotification("error", "Unable to create the task", 3)
+      }
 
       return false
     }
@@ -119,34 +100,44 @@ export default function useTasks() {
     }
   }
 
-  async function createTask(
-    title: string,
-    description: string,
-    deadline: Date | null,
-    completed: boolean,
-    color_code: string
-  ) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/create`, {
-      method: "POST",
+  async function markCompleteTask(id: string, complete: boolean) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/mark-complete`, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("access_token")}`,
       },
-      body: JSON.stringify({ title: title.trim(), description: description.trim(), deadline, completed, color_code }),
+      body: JSON.stringify({
+        task_id: id,
+        completed: complete,
+      }),
     })
     if (response.ok) {
-      setNotification("success", "Created the task successfully", 3)
+      setNotification("success", complete ? "Marked the task completed" : "Marked the task incomplete", 3)
       fetchTasks()
 
       return true
     } else {
-      const result = await response.json()
-      
-      if (result?.statusCode === 400) {
-        setNotification("error", result?.message?.[0], 3)
-      } else {
-        setNotification("error", "Unable to create the task", 3)
-      }
+      setNotification("error", "Unable to update the task", 3)
+
+      return false
+    }
+  }
+
+  async function deleteTask(id: string) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TODO_ENDPOINT}/delete/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+      },
+    })
+    if (response.ok) {
+      setNotification("success", "Deleted the task", 3)
+      fetchTasks()
+
+      return true
+    } else {
+      setNotification("error", "Unable to delete the task", 3)
 
       return false
     }
@@ -159,9 +150,9 @@ export default function useTasks() {
   return {
     tasks,
     fetchTasks,
-    deleteTask,
-    markCompleteTask,
-    updateTask,
     createTask,
+    updateTask,
+    markCompleteTask,
+    deleteTask,
   }
 }

@@ -25,7 +25,7 @@ export default function ClosedTask({ task, updateComplete, onDelete }: ClosedTas
                 <span className='text-md p-1 w-full text-ellipsis overflow-hidden whitespace-nowrap'>
                     {task.title}
                 </span>
-                <div onClick={e => e.stopPropagation()}>
+                <div title='Mark Completed' onClick={e => e.stopPropagation()}>
                     <Checkbox 
                         checked={task.completed} 
                         onChange={(e: boolean) => updateComplete(task.id, e)}

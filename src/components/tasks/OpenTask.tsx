@@ -43,7 +43,7 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
                 {task.id && <Checkbox
                     checked={completed}
                     onChange={(e: boolean) => setCompleted(e)}
-                    label='Mark Complete'
+                    label='Mark Completed'
                     size='normal'
                 />}
             </div>
