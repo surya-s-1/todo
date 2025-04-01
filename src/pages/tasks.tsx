@@ -6,6 +6,7 @@ import { useAuth } from '@/wrappers/AuthWrapper'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { FaPlus } from 'react-icons/fa'
+import { BsSortAlphaDown, BsSortAlphaDownAlt } from 'react-icons/bs'
 import useTasks from '@/hooks/useTasks'
 import { ExistingTask } from '@/components/tasks/types'
 import { getNewTask } from '@/components/utility'
@@ -19,14 +20,8 @@ export default function Home() {
   const [newTask, setNewTask] = useState(false)
   const [deleteId, setDeleteId] = useState('')
   const [filter, setFilter] = useState<'all' | 'ongoing' | 'completed'>('ongoing')
-
-  function handleModalClose() {
-    setNewTask(false)
-    setSelected(null)
-    setDeleteId('')
-    setModalOpen(false)
-    router.push('/tasks', undefined, { shallow: true })
-  }
+  const [sort, setSort] = useState<'asc' | 'desc' | null>(null)
+  const [showTasks, setShowTasks] = useState<Array<ExistingTask>>([])
 
   useEffect(() => {
     if (tasks.length > 0 && router.asPath.includes('#')) {
@@ -39,13 +34,50 @@ export default function Home() {
       }
     }
   }, [tasks, router.asPath])
+  
+  useEffect(() => {
+    let filteredTasks = tasks.filter((task) => {
+      if (filter === 'all') return true
+      if (filter === 'ongoing') return !task.completed
+      if (filter === 'completed') return task.completed
+      return true
+    })
+    
+    if (sort === 'asc' || sort === 'desc') {
+      filteredTasks = filteredTasks.sort((a, b) => {
+        const dateA = a.deadline ? new Date(a.deadline).getTime() : 0
+        const dateB = b.deadline ? new Date(b.deadline).getTime() : 0
+        return sort === 'desc' ? dateB - dateA : dateA - dateB
+      })
+    }
 
-  const filteredTasks = tasks.filter((task) => {
-    if (filter === 'all') return true
-    if (filter === 'ongoing') return !task.completed
-    if (filter === 'completed') return task.completed
-    return true
-  })
+    setShowTasks(filteredTasks)
+  }, [tasks, filter, sort])
+
+  function handleModalClose() {
+    setNewTask(false)
+    setSelected(null)
+    setDeleteId('')
+    setModalOpen(false)
+    router.push('/tasks', undefined, { shallow: true })
+  }
+
+  function handleSortClick() {
+    if (sort === 'asc') {
+      setSort('desc')
+      return
+    }
+
+    if (sort === 'desc') {
+      setSort(null)
+      return
+    }
+
+    if (!sort) {
+      setSort('asc')
+      return
+    }
+  }
 
   return (
     <div>
@@ -69,9 +101,23 @@ export default function Home() {
         >
           Completed
         </button>
+        <button
+          className={`filter-button ${sort && 'filter-button-selected'}`}
+          onClick={handleSortClick}
+        >
+          Sort By Deadline
+          {sort === 'asc' ? <BsSortAlphaDown size={20} /> : 
+          sort === 'desc' ? <BsSortAlphaDownAlt size={20} /> : null}
+        </button>
+        <button
+          className={`filter-button`}
+          onClick={() => {}}
+        >
+          Filter By Deadline
+        </button>
       </div>
       <div className='grid grid-cols-5 gap-4 px-8 py-2 auto-rows-fr'>
-        {filteredTasks.map((task: TaskValues) => (
+        {showTasks.map((task: ExistingTask) => (
           <ClosedTask
             key={task.id}
             task={task}
