@@ -8,12 +8,7 @@ interface FilterSortButtonsProps {
   toggleSort: () => void
 }
 
-export default function FilterSortButtons({
-  filter,
-  setFilter,
-  sort,
-  toggleSort,
-}: FilterSortButtonsProps) {
+export default function FilterSortButtons({ filter, setFilter, sort, toggleSort }: FilterSortButtonsProps) {
   return (
     <div className='flex gap-4 m-4 mx-8'>
       <button
@@ -39,11 +34,8 @@ export default function FilterSortButtons({
         onClick={toggleSort}
       >
         Sort by Deadline
-        {sort === 'asc' ? (
-          <BsSortAlphaDown size={20} />
-        ) : sort === 'desc' ? (
-          <BsSortAlphaDownAlt size={20} />
-        ) : null}
+        {sort === 'asc' ? ( <BsSortAlphaDown size={20} /> ) : 
+        sort === 'desc' ? ( <BsSortAlphaDownAlt size={20} /> ) : null}
       </button>
       <button className={`filter-button`} onClick={() => {}}>
         Filter by Deadline
