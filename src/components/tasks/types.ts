@@ -15,3 +15,6 @@ export interface NewTask extends Task {
     id: null
     created_at: null
 }
+
+export type SortValues = 'asc' | 'desc' | null
+export type FilterValues = 'all' | 'ongoing' | 'completed'
