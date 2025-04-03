@@ -24,7 +24,13 @@ export default function Home() {
   const [deleteId, setDeleteId] = useState('')
 
   const { tasks, deleteTask, markCompleteTask, updateTask, createTask } = useTasks()
-  const { filteredTasks, filter, setFilter, sort, toggleSort } = useFilterSort(tasks)
+  const { 
+    filteredTasks, 
+    filter, setFilter, 
+    sort, toggleSort,
+    deadlineFilter, setDeadlineFilter,
+    customDate, setCustomDate
+  } = useFilterSort(tasks)
 
   useEffect(() => {
     if (tasks.length > 0 && router.asPath.includes('#')) {
@@ -50,7 +56,16 @@ export default function Home() {
     <div>
       <Header username={user.username} />
 
-      <FilterSortButtons filter={filter} setFilter={setFilter} sort={sort} toggleSort={toggleSort} />
+      <FilterSortButtons 
+        filter={filter} 
+        setFilter={setFilter} 
+        sort={sort} 
+        toggleSort={toggleSort} 
+        deadlineFilter={deadlineFilter}
+        setDeadlineFilter={setDeadlineFilter}
+        customDate={customDate}
+        setCustomDate={setCustomDate}
+      />
 
       <div className='grid grid-cols-5 gap-4 px-8 py-2 auto-rows-fr'>
 

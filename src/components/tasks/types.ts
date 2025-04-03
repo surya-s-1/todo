@@ -18,3 +18,4 @@ export interface NewTask extends Task {
 
 export type SortValues = 'asc' | 'desc' | null
 export type FilterValues = 'all' | 'ongoing' | 'completed'
+export type DeadlineFilterValues = 'past' | 'today' | 'tomorrow' | 'custom' | 'none'
