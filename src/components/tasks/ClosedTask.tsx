@@ -1,10 +1,10 @@
-import { FaRegCalendarAlt } from "react-icons/fa"
-import { MdDelete } from "react-icons/md"
-import 'react-calendar/dist/Calendar.css'
 import { useRouter } from 'next/router'
-import { formatDeadline } from '../utility'
+import { FaRegCalendarAlt } from 'react-icons/fa'
+import { MdDelete } from 'react-icons/md'
+import 'react-calendar/dist/Calendar.css'
 import Checkbox from './Checkbox'
-import { ExistingTask } from "./types"
+import { ExistingTask } from './types'
+import { formatDeadline } from '../utility'
 
 interface ClosedTask {
     task: ExistingTask
@@ -48,7 +48,7 @@ export default function ClosedTask({ task, updateComplete, onDelete }: ClosedTas
                         onDelete(task.id)
                         e.stopPropagation()
                     }}
-                    className="custom-button custom-button-alert custom-button-small"
+                    className='custom-button custom-button-alert custom-button-small'
                 >
                     <MdDelete size={16} />
                 </button>

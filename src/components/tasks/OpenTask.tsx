@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { FaRegCalendarAlt } from "react-icons/fa"
-import { IoMdCloseCircle } from "react-icons/io"
-import { MdDone, MdDelete } from "react-icons/md"
+import { FaRegCalendarAlt } from 'react-icons/fa'
+import { IoMdCloseCircle } from 'react-icons/io'
+import { MdDone, MdDelete } from 'react-icons/md'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
 import { COLORS, formatDeadline } from '../utility'
@@ -62,7 +62,7 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
                     {formatDeadline(deadline)}
                     {deadline && (
                         <span
-                            className="cursor-pointer"
+                            className='cursor-pointer'
                             onClick={(e) => {
                                 e.stopPropagation()
                                 setDeadline(null)
@@ -73,7 +73,7 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
                     )}
                 </button>
                 {showCalendar && (
-                    <div className="absolute z-10 mb-30 -mx-1">
+                    <div className='absolute z-10 mb-30 -mx-1'>
                         <Calendar
                             onChange={e => handleDateChange(e ? new Date(e.toString()) : null)}
                             value={deadline}
@@ -90,19 +90,19 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
                 </button>
                 {task.id &&
                 <div className='flex flex-row items-center gap-5'>
-                    <div className="flex flex-row relative items-center">
+                    <div className='flex flex-row relative items-center'>
                         <button
                             onClick={() => setShowColorPicker(!showColorPicker)}
-                            className="w-6 h-6 rounded-full border border-black shadow-2xl cursor-pointer"
+                            className='w-6 h-6 rounded-full border border-black shadow-2xl cursor-pointer'
                             style={{ backgroundColor: color_code }}
                         >
                         </button>
                         {showColorPicker && (
-                            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 p-2 bg-white shadow-lg rounded-lg">
+                            <div className='absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-2 p-2 bg-white shadow-lg rounded-lg'>
                                 {COLORS.map((color) => (
                                     <button
                                         key={color}
-                                        className="w-6 h-6 rounded-full border-1 border-gray-300 cursor-pointer"
+                                        className='w-6 h-6 rounded-full border-1 border-gray-300 cursor-pointer'
                                         style={{ backgroundColor: color }}
                                         onClick={() => {
                                             setColorCode(color)

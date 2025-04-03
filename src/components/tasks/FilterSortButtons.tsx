@@ -1,6 +1,6 @@
+import React, { useState } from 'react'
 import { BsSortAlphaDown, BsSortAlphaDownAlt } from 'react-icons/bs'
 import { DeadlineFilterValues, FilterValues, SortValues } from './types'
-import React, { useState } from 'react'
 import DeadlineFilterDropdown from './DeadlineFilterDropdown'
 
 interface FilterSortButtonsProps {
