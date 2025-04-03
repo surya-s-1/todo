@@ -29,6 +29,8 @@ export default function AuthWrapper({ children }: WrappedComponent) {
             const currentTime = Date.now()
 
             if (expTime < currentTime) {
+                localStorage.removeItem('access_token')
+                localStorage.removeItem('refresh_token')
                 router.push('/login')
                 return
             }
