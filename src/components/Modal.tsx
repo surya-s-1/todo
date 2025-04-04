@@ -32,7 +32,7 @@ export default function Modal({ isOpen, onClose, children }: ModalArguments) {
         >
             <div
                 onClick={e => e.stopPropagation()}
-                className={`mn-w-fit min-h-fit w-full sm:w-7/12 h-1/2 max-w-screen max-h-screen p-0 rounded-xl shadow-md transform transition-transform duration-200 ${visible ? 'scale-100' : 'scale-95'}`}
+                className={`mn-w-fit min-h-fit w-full sm:w-7/12 h-1/2 max-w-screen max-h-screen p-0 rounded-xl shadow-md transform transition-transform duration-200 ${visible ? 'scale-100' : 'scale-95'} flex items-center justify-center`}
             >
                 {children}
             </div>
