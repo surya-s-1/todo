@@ -64,7 +64,12 @@ export default function Home() {
 
   return (
     <div className='bg-white dark:bg-gray-700 min-h-screen'>
-      <Header username={user.username} startNewTask={startNewTask} />
+      <Header 
+        username={user.username} 
+        startNewTask={startNewTask} 
+        darkMode={darkMode}
+        setDarkMode={(val) => setDarkMode(val)}
+      />
 
       <FilterSortButtons 
         filter={filter} 
@@ -81,7 +86,7 @@ export default function Home() {
 
         {filteredTasks.map((task: ExistingTask) => (
           <ClosedTask
-            key={`${task.id}-${darkMode}`}
+            key={task.id}
             darkMode={darkMode}
             task={task}
             updateComplete={markCompleteTask}

@@ -7,35 +7,25 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5"
 interface HeaderProps {
     username: string
     startNewTask: () => void
+    darkMode: boolean
+    setDarkMode: (val: boolean) => void
 }
 
-export default function Header({ username, startNewTask }: HeaderProps) {
+export default function Header({ username, startNewTask, darkMode, setDarkMode }: HeaderProps) {
     const [profileOpen, setProfileOpen] = useState(false)
-    const [darkMode, setDarkMode] = useState(false)
     const router = useRouter()
 
     useEffect(() => {
-        const storedTheme = localStorage.getItem("theme")
-        if (storedTheme === "dark") {
-            document.documentElement.classList.add("dark")
-            setDarkMode(true)
-        }
-    }, [])
-
-    const toggleDarkMode = () => {
         if (darkMode) {
-            document.documentElement.classList.remove("dark")
-            localStorage.setItem("theme", "light")
-        } else {
             document.documentElement.classList.add("dark")
-            localStorage.setItem("theme", "dark")
+        } else {
+            document.documentElement.classList.remove("dark")
         }
-        setDarkMode(!darkMode)
-    }
+    }, [darkMode])
 
     const handleLogout = () => {
         localStorage.removeItem('access_token'),
-            localStorage.removeItem('refresh_token')
+        localStorage.removeItem('refresh_token')
         router.push('/login')
     }
 
@@ -53,7 +43,7 @@ export default function Header({ username, startNewTask }: HeaderProps) {
                     </button>
                 </div>
                 <div className="relative">
-                    <button className="flex flex-row items-center gap-2 cursor-pointer" onClick={() => toggleDarkMode()}>
+                    <button className="flex flex-row items-center gap-2 cursor-pointer" onClick={() => setDarkMode(!darkMode)}>
                         <span className="block">
                             {darkMode ? <CiLight size={30} /> : <CiDark size={30} />}
                         </span>
