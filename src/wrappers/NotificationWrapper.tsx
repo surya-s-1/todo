@@ -27,6 +27,13 @@ export default function NotificationWrapper({ children }: WrappedComponent) {
     const [notifications, setNotifications] = useState(Array<Alert>)
 
     const setNotification = (type: NotificationType, message: string, timeout: number = 3) => {
+        if (!type || !message.trim()) return
+
+        timeout = Math.floor(timeout)
+
+        if (timeout > 30) timeout = 30
+        if (timeout < 1) timeout = 1
+
         const id = Date.now()
 
         setNotifications((prev) => [...prev, { id, type, message }])
@@ -51,7 +58,7 @@ export default function NotificationWrapper({ children }: WrappedComponent) {
                             }
                         >
                             <CiCircleInfo size={24} />
-                            <span>{el.message}</span>
+                            <span>{el.message.charAt(0).toUpperCase() + el.message.slice(1)}</span>
                         </div>
                     )
                 })}
