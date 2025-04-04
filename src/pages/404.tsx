@@ -8,7 +8,7 @@ export default function Custom404() {
 
     useEffect(() => {
         const timer = setInterval(() => {
-            setCounter((prevCounter) => prevCounter - 1)
+            setCounter((prevCounter) => prevCounter > 0 ? prevCounter - 1 : 0)
         }, 1000)
 
         const timeout = setTimeout(() => {
