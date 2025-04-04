@@ -32,7 +32,7 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
     }
 
     return (
-        <div className={`flex flex-col rounded-xl p-2`} style={{ backgroundColor: color_code }}>
+        <div className={`flex flex-col rounded-xl p-2 w-full h-full`} style={{ backgroundColor: color_code }}>
             <div className='flex flex-row items-center justify-between gap-2'>
                 <input
                     className='text-2xl p-2 w-2xl border-0 outline-0'
@@ -48,7 +48,7 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
                 />}
             </div>
             <textarea
-                className='p-2 border-0 outline-0 h-52 resize-none overflow-auto'
+                className='p-2 border-0 outline-0 h-full resize-none overflow-auto'
                 placeholder='Enter Description...'
                 value={description}
                 onChange={e => setDescription(e.target.value)}

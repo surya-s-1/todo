@@ -22,7 +22,7 @@ export default function ClosedTask({ task, updateComplete, onDelete }: ClosedTas
             onClick={() => router.push(`/tasks/#${task.id}`)}
         >
             <div className='flex items-center justify-between gap-2'>
-                <span className='text-md p-1 w-full text-ellipsis overflow-hidden whitespace-nowrap'>
+                <span className='text-lg font-semibold p-1 w-full text-ellipsis overflow-hidden whitespace-nowrap'>
                     {task.title}
                 </span>
                 <div title='Mark Completed' onClick={e => e.stopPropagation()}>

@@ -38,7 +38,7 @@ export default function NotificationWrapper({ children }: WrappedComponent) {
 
     return(
         <NotificationContext.Provider value={{setNotification}}>
-            <div className="fixed flex flex-col items-end top-0 right-0 z-30">
+            <div className="fixed flex flex-col items-end top-0 right-0 z-50">
                 {notifications.map((el) => {
                     return(
                         <div

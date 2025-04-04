@@ -15,7 +15,7 @@ export default function Header({ username }: { username: string }) {
 
     return (
         <>
-            <div className="flex flex-row items-baseline justify-between shadow-md py-4 sticky top-0 z-10 bg-white/50 backdrop-blur-sm">
+            <div className="flex flex-row items-center justify-between shadow-md py-4 sticky top-0 z-20 bg-white/50 backdrop-blur-sm">
                 <div className="flex flex-row items-center gap-4 ml-8">
                     <IoCheckmarkDoneCircleOutline size={48} />
                     <h2>To-Do List</h2>

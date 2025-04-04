@@ -67,7 +67,7 @@ export default function Home() {
         setCustomDate={setCustomDate}
       />
 
-      <div className='grid grid-cols-5 gap-4 px-8 py-2 auto-rows-fr'>
+      <div className='grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-5 gap-4 px-4 sm:px-8 py-2 auto-rows-fr'>
 
         {filteredTasks.map((task: ExistingTask) => (
           <ClosedTask
