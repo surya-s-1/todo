@@ -4,18 +4,19 @@ import { IoMdCloseCircle } from 'react-icons/io'
 import { MdDone, MdDelete } from 'react-icons/md'
 import Calendar from 'react-calendar'
 import 'react-calendar/dist/Calendar.css'
-import { COLORS, formatDeadline } from '../utility'
+import { COLORS, formatDeadline, getDarkModeColor } from '../utility'
 import Checkbox from './Checkbox'
 import { ExistingTask, NewTask } from './types'
 
 interface OpenTaskArguments {
+    darkMode: boolean
     task: NewTask | ExistingTask
     button_name: string
     onSubmit: (title: string, description: string, deadline: Date | null, completed: boolean, color_code: string) => void
     onDelete?: (id: string) => void
 }
 
-export default function OpenTask({ task, button_name, onSubmit, onDelete }: OpenTaskArguments) {
+export default function OpenTask({ darkMode, task, button_name, onSubmit, onDelete }: OpenTaskArguments) {
     const [title, setTitle] = useState<string>(task.title)
     const [description, setDescription] = useState<string>(task.description || '')
     const [deadline, setDeadline] = useState<Date | null>(task.deadline)
@@ -32,7 +33,10 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
     }
 
     return (
-        <div className={`flex flex-col rounded-xl p-2 w-full h-96 max-h-screen`} style={{ backgroundColor: color_code }}>
+        <div 
+            className={`flex flex-col rounded-xl p-2 w-full h-96 max-h-screen`} 
+            style={{ backgroundColor: darkMode ? getDarkModeColor(color_code) : color_code }}
+        >
             <div className='flex flex-row items-center justify-between gap-2'>
                 <input
                     className='text-2xl p-2 w-9/12 lg:w-2xl border-0 outline-0'

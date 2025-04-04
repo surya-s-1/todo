@@ -22,6 +22,11 @@ export default function Home() {
   const [selected, setSelected] = useState<ExistingTask | null>(null)
   const [newTask, setNewTask] = useState<boolean>(false)
   const [deleteId, setDeleteId] = useState('')
+  const [darkMode, setDarkMode] = useState<boolean>(localStorage.getItem('theme') === 'dark')
+
+  useEffect(() => {
+    setDarkMode(localStorage.getItem('theme') === 'dark')
+  }, [localStorage.getItem('theme')])
 
   const { tasks, deleteTask, markCompleteTask, updateTask, createTask } = useTasks()
   const { 
@@ -76,7 +81,8 @@ export default function Home() {
 
         {filteredTasks.map((task: ExistingTask) => (
           <ClosedTask
-            key={task.id}
+            key={`${task.id}-${darkMode}`}
+            darkMode={darkMode}
             task={task}
             updateComplete={markCompleteTask}
             onDelete={(id: string) => {
@@ -100,6 +106,7 @@ export default function Home() {
         <Modal isOpen={modalOpen} onClose={() => handleModalClose()}>
           <OpenTask
             task={selected}
+            darkMode={darkMode}
             button_name='Update'
             onSubmit={async (title, desc, deadline, completed, color_code) => {
               const success = await updateTask(selected.id, title, desc, deadline, completed, color_code)
@@ -119,6 +126,7 @@ export default function Home() {
         <Modal isOpen={modalOpen} onClose={() => handleModalClose()}>
           <OpenTask
             task={getNewTask()}
+            darkMode={darkMode}
             button_name='Create'
             onSubmit={async (...props) => {
               const success = await createTask(...props)

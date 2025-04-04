@@ -3,7 +3,7 @@ interface Task {
     description: string | null
     deadline: Date | null
     completed: boolean
-    color_code: string | null
+    color_code: string
 }
 
 export interface ExistingTask extends Task {
