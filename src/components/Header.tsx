@@ -1,3 +1,4 @@
+import { useSystemTheme } from "@/wrappers/DarkModeWrapper"
 import { useRouter } from "next/router"
 import { useEffect, useState } from "react"
 import { CgProfile } from "react-icons/cg"
@@ -7,13 +8,17 @@ import { IoCheckmarkDoneCircleOutline } from "react-icons/io5"
 interface HeaderProps {
     username: string
     startNewTask: () => void
-    darkMode: boolean
-    setDarkMode: (val: boolean) => void
 }
 
-export default function Header({ username, startNewTask, darkMode, setDarkMode }: HeaderProps) {
+export default function Header({ username, startNewTask }: HeaderProps) {
     const [profileOpen, setProfileOpen] = useState(false)
     const router = useRouter()
+    const [ darkMode, setDarkMode ] = useState(false)
+    const { theme, setTheme } = useSystemTheme()
+
+    useEffect(() => {
+        setDarkMode(theme === 'dark')
+    }, [theme])
 
     useEffect(() => {
         if (darkMode) {
@@ -22,6 +27,14 @@ export default function Header({ username, startNewTask, darkMode, setDarkMode }
             document.documentElement.classList.remove("dark")
         }
     }, [darkMode])
+
+    const toggleDarkMode = () => {
+        if (darkMode) {
+            setTheme('light')
+        } else {
+            setTheme('dark')
+        }
+    }
 
     const handleLogout = () => {
         localStorage.removeItem('access_token'),
@@ -43,7 +56,7 @@ export default function Header({ username, startNewTask, darkMode, setDarkMode }
                     </button>
                 </div>
                 <div className="relative">
-                    <button className="flex flex-row items-center gap-2 cursor-pointer" onClick={() => setDarkMode(!darkMode)}>
+                    <button className="flex flex-row items-center gap-2 cursor-pointer" onClick={() => toggleDarkMode()}>
                         <span className="block">
                             {darkMode ? <CiLight size={30} /> : <CiDark size={30} />}
                         </span>

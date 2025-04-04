@@ -14,6 +14,7 @@ import ClosedTask from '@/components/tasks/ClosedTask'
 import OpenTask from '@/components/tasks/OpenTask'
 import FilterSortButtons from '@/components/tasks/FilterSortButtons'
 import { getNewTask } from '@/components/utility'
+import { useSystemTheme } from '@/wrappers/DarkModeWrapper'
 
 export default function Home() {
   const { user } = useAuth()
@@ -22,11 +23,13 @@ export default function Home() {
   const [selected, setSelected] = useState<ExistingTask | null>(null)
   const [newTask, setNewTask] = useState<boolean>(false)
   const [deleteId, setDeleteId] = useState('')
-  const [darkMode, setDarkMode] = useState<boolean>(localStorage.getItem('theme') === 'dark')
+  const [darkMode, setDarkMode] = useState<boolean>(false)
+
+  const { theme } = useSystemTheme()
 
   useEffect(() => {
-    setDarkMode(localStorage.getItem('theme') === 'dark')
-  }, [localStorage.getItem('theme')])
+    setDarkMode(theme === 'dark')
+  }, [theme])
 
   const { tasks, deleteTask, markCompleteTask, updateTask, createTask } = useTasks()
   const { 
@@ -66,9 +69,7 @@ export default function Home() {
     <div className='bg-white dark:bg-gray-700 min-h-screen'>
       <Header 
         username={user.username} 
-        startNewTask={startNewTask} 
-        darkMode={darkMode}
-        setDarkMode={(val) => setDarkMode(val)}
+        startNewTask={startNewTask}
       />
 
       <FilterSortButtons 
