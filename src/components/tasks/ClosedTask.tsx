@@ -18,7 +18,7 @@ export default function ClosedTask({ task, updateComplete, onDelete }: ClosedTas
 
     return (
         <div 
-            className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border border-gray-300 cursor-pointer`} style={{ backgroundColor: task.color_code || '#FFFFFF' }}
+            className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border-0 cursor-pointer`} style={{ backgroundColor: task.color_code || '#FFFFFF' }}
             onClick={() => router.push(`/tasks/#${task.id}`)}
         >
             <div className='flex items-center justify-between gap-2'>
