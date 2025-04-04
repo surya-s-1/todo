@@ -17,7 +17,7 @@ export default function Checkbox({ checked, onChange, label, size = 'normal' }: 
             />
             {label &&
             <label
-                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300 text-nowrap"
             >
                 {label}
             </label>}

@@ -91,7 +91,7 @@ export default function useTasks() {
       const result = await response.json()
 
       if (result?.message) {
-        setNotification('error', result?.message, 3)
+        setNotification('error', typeof result?.message === 'string' ? result?.message : result?.message?.[0], 3)
       } else {
         setNotification('error', 'Unable to update the task', 3)
       }

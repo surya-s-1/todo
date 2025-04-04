@@ -35,7 +35,7 @@ h1, h2, h3, h4, h5, h6, p {
 
 @layer components {
   .custom-button {
-    @apply flex items-center gap-2 text-sm lg:text-base p-2 rounded-md transition-colors bg-gray-200 hover:bg-gray-300 text-gray-600 duration-300 cursor-pointer w-fit;
+    @apply flex items-center gap-2 text-xs lg:text-base p-2 rounded-md transition-colors bg-gray-200 hover:bg-gray-300 text-gray-600 duration-300 cursor-pointer w-fit;
   }
 
   .custom-button-alert {
@@ -51,11 +51,11 @@ h1, h2, h3, h4, h5, h6, p {
   }
 
   .custom-button-small {
-    @apply gap-1 p-1 rounded-sm text-sm
+    @apply gap-1 p-1 rounded-sm text-xs lg:text-sm
   }
 
   .filter-button {
-    @apply flex items-center gap-2 text-sm lg:text-base p-2 rounded-sm transition-colors bg-gray-200 hover:bg-gray-300 text-gray-600 duration-150 cursor-pointer w-fit;
+    @apply flex items-center gap-2 text-xs lg:text-base p-2 rounded-sm transition-colors bg-gray-200 hover:bg-gray-300 text-gray-600 duration-150 cursor-pointer w-fit;
   }
 
   .filter-button-selected {
