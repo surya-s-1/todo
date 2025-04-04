@@ -98,7 +98,7 @@ export default function DeadlineFilterDropdown({
         (open || (showCalendar && value === 'custom')) && triggerRect ? (
           <div ref={portalContainerRef} style={baseStyles}>
             {open && (
-              <div className="bg-gray-200 text-gray-600 rounded-md shadow-lg mt-1">
+              <div className="bg-gray-200 dark:bg-gray-600 text-gray-600 rounded-md shadow-lg mt-1">
                 {options.map(option => (
                   <div
                     key={option.value}

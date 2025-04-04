@@ -58,7 +58,7 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className='bg-white dark:bg-gray-700 min-h-screen'>
       <Header username={user.username} startNewTask={startNewTask} />
 
       <FilterSortButtons 
