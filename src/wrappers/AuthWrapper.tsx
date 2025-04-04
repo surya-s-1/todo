@@ -23,7 +23,6 @@ export default function AuthWrapper({ children }: WrappedComponent) {
                 return
             }
 
-            // Decode JWT payload
             const payload = JSON.parse(atob(access_token.split('.')[1]))
             const expTime = payload.exp * 1000
             const currentTime = Date.now()
