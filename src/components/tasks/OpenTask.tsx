@@ -32,7 +32,7 @@ export default function OpenTask({ task, button_name, onSubmit, onDelete }: Open
     }
 
     return (
-        <div className={`flex flex-col rounded-xl p-2 w-full h-full`} style={{ backgroundColor: color_code }}>
+        <div className={`flex flex-col rounded-xl p-2 w-full h-96`} style={{ backgroundColor: color_code }}>
             <div className='flex flex-row items-center justify-between gap-2'>
                 <input
                     className='text-2xl p-2 w-9/12 lg:w-2xl border-0 outline-0'
