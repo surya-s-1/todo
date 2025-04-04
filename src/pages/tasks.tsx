@@ -20,7 +20,7 @@ export default function Home() {
   const router = useRouter()
   const [modalOpen, setModalOpen] = useState(false)
   const [selected, setSelected] = useState<ExistingTask | null>(null)
-  const [newTask, setNewTask] = useState(false)
+  const [newTask, setNewTask] = useState<boolean>(false)
   const [deleteId, setDeleteId] = useState('')
 
   const { tasks, deleteTask, markCompleteTask, updateTask, createTask } = useTasks()
@@ -44,6 +44,11 @@ export default function Home() {
     }
   }, [tasks, router.asPath])
 
+  function startNewTask() {
+    setNewTask(true)
+    setModalOpen(true)
+  }
+
   function handleModalClose() {
     setNewTask(false)
     setSelected(null)
@@ -54,7 +59,7 @@ export default function Home() {
 
   return (
     <div>
-      <Header username={user.username} />
+      <Header username={user.username} startNewTask={startNewTask} />
 
       <FilterSortButtons 
         filter={filter} 
@@ -83,10 +88,7 @@ export default function Home() {
 
         <div
           className='border-2 border-dashed border-gray-300 flex items-center justify-center py-16 cursor-pointer'
-          onClick={() => {
-            setNewTask(true)
-            setModalOpen(true)
-          }}
+          onClick={() => startNewTask()}
         >
           <FaPlus color='#d1d5dc' size={60} />
         </div>

@@ -1,9 +1,15 @@
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { CgProfile } from "react-icons/cg";
-import { IoCheckmarkDoneCircleOutline } from "react-icons/io5";
+import { useRouter } from "next/router"
+import { useState } from "react"
+import { CgProfile } from "react-icons/cg"
+import { CiSquarePlus } from "react-icons/ci"
+import { IoCheckmarkDoneCircleOutline } from "react-icons/io5"
 
-export default function Header({ username }: { username: string }) {
+interface HeaderProps { 
+    username: string
+    startNewTask: () => void 
+}
+
+export default function Header({ username, startNewTask }: HeaderProps) {
     const [profileOpen, setProfileOpen] = useState(false)
     const router = useRouter()
 
@@ -21,6 +27,12 @@ export default function Header({ username }: { username: string }) {
                     <h2>To-Do List</h2>
                 </div>
                 <div className="flex flex-row items-start gap-4 px-4">
+                    <div className="relative">
+                        <button className="flex flex-row items-center gap-2 cursor-pointer" onClick={() => startNewTask()}>
+                            <CiSquarePlus size={36} />
+                            <span className="hidden lg:block">New Task</span>
+                        </button>
+                    </div>
                     <div className="relative">
                         <CgProfile
                             onClick={() => setProfileOpen(!profileOpen)}
