@@ -58,7 +58,7 @@ export default function Header({ username, startNewTask }: HeaderProps) {
                 <div className="relative">
                     <button className="flex flex-row items-center gap-2 cursor-pointer" onClick={() => toggleDarkMode()}>
                         <span className="block">
-                            {darkMode ? <CiLight size={30} /> : <CiDark size={30} />}
+                            {darkMode ? <CiDark size={30} />: <CiLight size={30} />}
                         </span>
                         <span className="hidden lg:block">{darkMode ? "Dark Mode" : "Light Mode"}</span>
                     </button>
