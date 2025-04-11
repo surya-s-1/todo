@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router'
 import React, { useState, useEffect } from 'react'
 
+import BackendNotice from '@/components/login/BackendNotice'
+
 const LoginPage = () => {
     useEffect(() => {
         document.title = 'Login | To-Do App'
@@ -43,6 +45,8 @@ const LoginPage = () => {
     }
 
     return (
+        <>
+        <BackendNotice />
         <div className='flex flex-col items-center justify-center h-screen'>
             <div>
                 <h2 className='text-2xl mb-2'>Login</h2>
@@ -73,6 +77,7 @@ const LoginPage = () => {
                 </form>
             </div>
         </div>
+        </>
     )
 }
 
