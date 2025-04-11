@@ -33,7 +33,7 @@ export default function Notice({ type, message }: NoticeProps) {
     const text = textMap[type]
 
     return (
-        <div className={`flex items-start gap-3 p-4 border rounded-lg ${bg}`}>
+        <div className={`flex items-start gap-3 p-4 border ${bg}`}>
             <div className="pt-0.5">{icon}</div>
             <p className={`text-sm ${text}`}>
                 {message}
