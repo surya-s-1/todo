@@ -1,14 +1,14 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
+
+const isProd = process.env.NODE_ENV === 'production'
 
 const nextConfig: NextConfig = {
-  /* config options here */
-  basePath: '/todo',
-  // assetPrefix: '/todo',
-  // trailingSlash: true,
-  // skipTrailingSlashRedirect: true,
-  // output: 'export',
+  output: 'export',
+  basePath: isProd ? `/todo` : '',
+  images: {
+    unoptimized: true,
+  },
   reactStrictMode: true,
-  devIndicators: false
-};
+}
 
-export default nextConfig;
+export default nextConfig
