@@ -19,7 +19,7 @@ export default function ClosedTask({ darkMode, task, updateComplete, onDelete }:
 
     return (
         <div 
-            className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border-0 cursor-pointer`} 
+            className={`flex flex-col rounded-md p-2 w-full h-full gap-1 border cursor-pointer`} 
             style={{ backgroundColor: darkMode ? getDarkModeColor(task.color_code) : task.color_code }}
             onClick={() => router.push(`/tasks/#${task.id}`)}
         >
