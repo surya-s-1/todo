@@ -72,7 +72,7 @@ const LoginPage = () => {
                         Submit
                     </button>
                     <span className='text-sm'>
-                        Don't have an account? <a href='/todo/register' className='text-blue-500'>Register</a>
+                        Don't have an account? <a href='/todolegacy/register' className='text-blue-500'>Register</a>
                     </span>
                 </form>
             </div>
