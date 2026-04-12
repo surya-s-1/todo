@@ -68,7 +68,7 @@ const RegisterPage = () => {
                         Register
                     </button>
                     <span className='text-sm'>
-                        Already have an account? <a href='/todo/login' className='text-blue-500'>Login</a>
+                        Already have an account? <a href='/todolegacy/login' className='text-blue-500'>Login</a>
                     </span>
                 </form>
             </div>
